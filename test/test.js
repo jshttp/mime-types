@@ -24,11 +24,11 @@ describe('.contentType()', function () {
   })
 
   it('json', function () {
-    assert.equal(set('json'), 'application/json')
+    assert.equal(set('json'), 'application/json; charset=utf-8')
   })
 
   it('application/json', function () {
-    assert.equal(set('application/json'), 'application/json')
+    assert.equal(set('application/json'), 'application/json; charset=utf-8')
   })
 
   it('jade', function () {
