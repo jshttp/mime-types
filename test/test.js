@@ -34,4 +34,13 @@ describe('.contentType()', function () {
   it('jade', function () {
     assert.equal(set('jade'), 'text/jade; charset=utf-8')
   })
+
+  it('should not error on non-string types.', function () {
+    assert.doesNotThrow(function () {
+      mime.lookup({ noteven: "once" })
+      mime.lookup(null)
+      mime.lookup(true)
+      mime.lookup(Infinity)
+    })
+  })
 })
