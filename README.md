@@ -1,6 +1,7 @@
-# MIME Types
+# mime-types [![Build Status](https://travis-ci.org/expressjs/mime-types.svg)](https://travis-ci.org/expressjs/mime-types) [![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types)
 
-The ultimate mime type utility.
+
+The ultimate content-type utility.
 Similar to [mime](https://github.com/broofa/node-mime) except:
 
 - No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`
