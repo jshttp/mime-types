@@ -22,6 +22,16 @@ function* get(url) {
   var text = res.text
   var json = {}
   // http://en.wikipedia.org/wiki/Internet_media_type#Naming
+  /**
+   * Mime types and associated extensions are stored in the form:
+   *
+   *   <type> <ext> <ext> <ext>
+   *
+   * And some are commented out with a leading `#` because they have no associated extensions.
+   * This regexp checks whether a single line matches this format, ignoring lines that are just comments.
+   * We could also just remove all lines that start with `#` if we want to make the JSON files smaller
+   * and ignore all mime types without associated extensions.
+   */
   var re = /^(?:# )?([\w-]+\/[\w\+\.-]+)(?:\s+\w+)*$/
   text = text.split('\n')
   .filter(Boolean)
@@ -30,7 +40,10 @@ function* get(url) {
     if (!line) return
     var match = re.exec(line)
     if (!match) return
-    json[match[1]] = line.replace(/^(?:# )?([\w-]+\/[\w\+\.-]+)/, '').split(/\s+/).filter(Boolean)
+    // remove the leading # and <type> and return all the <ext>s
+    json[match[1]] = line.replace(/^(?:# )?([\w-]+\/[\w\+\.-]+)/, '')
+      .split(/\s+/)
+      .filter(Boolean)
   })
   fs.writeFileSync('lib/' + path.basename(url).split('.')[0] + '.json',
     JSON.stringify(json, null, 2))
