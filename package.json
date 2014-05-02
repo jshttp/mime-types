@@ -1,0 +1,23 @@
+{
+  "name": "mime-types",
+  "description": "ultimate mime type utility",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com",
+    "twitter": "https://twitter.com/jongleberry"
+  },
+  "repository": "expressjs/mime-types",
+  "license": "MIT",
+  "main": "lib",
+  "devDependencies": {
+    "co": "3",
+    "cogent": "0",
+    "mocha": "1",
+    "should": "3"
+  },
+  "scripts": {
+    "test": "make test"
+  }
+}
