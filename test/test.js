@@ -43,4 +43,8 @@ describe('.contentType()', function () {
       mime.lookup(Infinity)
     })
   })
+
+  it('should return false for unknown types', function () {
+    assert.equal(set('.jalksdjflakjsdjfasdf'), false)
+  })
 })
