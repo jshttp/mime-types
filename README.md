@@ -1,8 +1,11 @@
-# mime-types [![Build Status](https://travis-ci.org/expressjs/mime-types.svg)](https://travis-ci.org/expressjs/mime-types) [![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types)
+# mime-types [![Build Status](https://travis-ci.org/expressjs/mime-types.svg?branch=master)](https://travis-ci.org/expressjs/mime-types) [![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types)
 
 
 The ultimate content-type utility.
-Similar to [mime](https://github.com/broofa/node-mime) except:
+
+`npm install mime-types`
+
+#### Similar to [mime](https://github.com/broofa/node-mime) except:
 
 - No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`
 - No fallbacks, so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`
@@ -22,30 +25,57 @@ You should only touch `custom.json`.
 
 ## API
 
+```js
+var mime = require('mime-types')
+```
+
+All functions return `false` if input is invalid or not found.
+
 ### mime.lookup(path)
 
-Lookup the mime type associated with a file.
-If no type is found, returns `false`.
+Lookup the content-type associated with a file.
 
-### mime.extension(type)
+```js
+mime.lookup('json')           // 'application/json'
+mime.lookup('.md')            // 'text/x-markdown'
+mime.lookup('file.html')      // 'text/html'
+mime.lookup('folder/file.js') // 'application/javascript'
 
-Get the default extension for the type
-
-### mime.charsets.lookup(type)
-
-Lookup the given charset of a mime type.
+mime.lookup('cats') // false
+```
 
 ### mime.contentType(type)
 
-Create a full `content-type` header given a mime-type or extension.
+Create a full content-type header given a content-type or extension.
+
+```js
+mime.contentType('markdown')  // 'text/x-markdown; charset=utf-8'
+mime.contentType('file.json') // 'application/json; charset=utf-8'
+```
+
+### mime.extension(type)
+
+Get the default extension for a content-type.
+
+```js
+mime.extension('application/octet-stream') // 'bin'
+```
+
+### mime.charset(type)
+
+Lookup the implied charset of a content-type.
+
+```js
+mime.charset('text/x-markdown') // 'UTF-8'
+```
 
 ### mime.types[extension] = type
 
-Lookup a type via extension.
+Lookup a content-type via extension map.
 
 ### mime.extensions[type] = [extensions]
 
-Lookup all the associated extensions of a mime type.
+Lookup all the associated extensions of a content-type via map.
 
 ### mime.define(types)
 
@@ -54,9 +84,13 @@ Globally add definitions.
 
 ```js
 {
-  "<mime-type>": [extensions...],
-  "<mime-type>": [extensions...]
+  "<content-type>": [extensions...],
+  "<content-type>": [extensions...]
 }
 ```
 
 See the `.json` files in `lib/` for examples.
+
+## License
+
+[MIT](LICENSE)
