@@ -12,6 +12,15 @@ describe('.lookup()', function () {
     assert.equal(mime.lookup('file.jade'), 'text/jade')
     assert.equal(mime.lookup('folder/file.jade'), 'text/jade')
   })
+
+  it('should not error on non-string types', function () {
+    assert.doesNotThrow(function () {
+      mime.lookup({ noteven: "once" })
+      mime.lookup(null)
+      mime.lookup(true)
+      mime.lookup(Infinity)
+    })
+  })
 })
 
 describe('.contentType()', function () {
@@ -35,12 +44,12 @@ describe('.contentType()', function () {
     assert.equal(set('jade'), 'text/jade; charset=utf-8')
   })
 
-  it('should not error on non-string types.', function () {
+  it('should not error on non-string types', function () {
     assert.doesNotThrow(function () {
-      mime.lookup({ noteven: "once" })
-      mime.lookup(null)
-      mime.lookup(true)
-      mime.lookup(Infinity)
+      set({ noteven: "once" })
+      set(null)
+      set(true)
+      set(Infinity)
     })
   })
 
