@@ -3,7 +3,9 @@
 
 The ultimate content-type utility.
 
-`npm install mime-types`
+```sh
+$ npm install mime-types
+```
 
 #### Similar to [mime](https://github.com/broofa/node-mime) except:
 
@@ -63,7 +65,7 @@ mime.extension('application/octet-stream') // 'bin'
 
 ### mime.charset(type)
 
-Lookup the implied charset of a content-type.
+Lookup the implied default charset of a content-type.
 
 ```js
 mime.charset('text/x-markdown') // 'UTF-8'
@@ -71,11 +73,11 @@ mime.charset('text/x-markdown') // 'UTF-8'
 
 ### mime.types[extension] = type
 
-Lookup a content-type via extension map.
+A map of content-types by extension.
 
 ### mime.extensions[type] = [extensions]
 
-Lookup all the associated extensions of a content-type via map.
+A map of extensions by content-type.
 
 ### mime.define(types)
 
