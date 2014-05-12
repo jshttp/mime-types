@@ -58,6 +58,8 @@ eq('font/opentype', mime.lookup('file.otf'));
 // Test charsets
 //
 
-eq('UTF-8', mime.charsets.lookup('text/plain'));
-eq(false, mime.charsets.lookup(mime.types.js));
-// eq('fallback', mime.charsets.lookup('application/octet-stream', 'fallback'));
+eq('UTF-8', mime.charset('text/plain'));
+eq(false, mime.charset(mime.types.js));
+eq('UTF-8', mime.charset('application/json'))
+eq('UTF-8', mime.charsets.lookup('text/something'));
+// eq('fallback', mime.charset('application/octet-stream', 'fallback'));
