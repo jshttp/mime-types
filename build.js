@@ -46,7 +46,7 @@ function* get(url) {
       .filter(Boolean)
   })
   fs.writeFileSync('lib/' + path.basename(url).split('.')[0] + '.json',
-    JSON.stringify(json, null, 2))
+    JSON.stringify(json, null, 2) + '\n')
 }
 
 co(function* () {
