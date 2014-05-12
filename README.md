@@ -1,7 +1,8 @@
 # mime-types [![Build Status](https://travis-ci.org/expressjs/mime-types.svg?branch=master)](https://travis-ci.org/expressjs/mime-types) [![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types)
 
+The ultimate javascript content-type utility.
 
-The ultimate content-type utility.
+### Install
 
 ```sh
 $ npm install mime-types
@@ -9,17 +10,18 @@ $ npm install mime-types
 
 #### Similar to [mime](https://github.com/broofa/node-mime) except:
 
-- No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`
-- No fallbacks, so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`
+- No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`.
+- No fallbacks, so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
 - Additional mime types are added such as jade and stylus. Feel free to add more!
-- Browser support via Browserify and Component by converting lists to JSON files
+- Browser support via Browserify and Component by converting lists to JSON files.
 
 Otherwise, the API is compatible.
 
-## Adding Types
+### Adding Types
 
 If you'd like to add additional types,
-simply create a PR with a link to where it's defined.
+simply create a PR adding the type to `custom.json` and
+a reference link to the [sources](SOURCES.md).
 
 Do __NOT__ edit `mime.json` or `node.json`.
 Those are pulled using `build.js`.
