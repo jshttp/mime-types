@@ -3,57 +3,98 @@ var assert = require('assert')
 
 var mime = require('..')
 
-var set = mime.contentType
+var lookup = mime.lookup
+var extension = mime.extension
+var charset = mime.charset
+var contentType = mime.contentType
 
 describe('.lookup()', function () {
+
   it('jade', function () {
-    assert.equal(mime.lookup('jade'), 'text/jade')
-    assert.equal(mime.lookup('.jade'), 'text/jade')
-    assert.equal(mime.lookup('file.jade'), 'text/jade')
-    assert.equal(mime.lookup('folder/file.jade'), 'text/jade')
+    assert.equal(lookup('jade'), 'text/jade')
+    assert.equal(lookup('.jade'), 'text/jade')
+    assert.equal(lookup('file.jade'), 'text/jade')
+    assert.equal(lookup('folder/file.jade'), 'text/jade')
   })
 
   it('should not error on non-string types', function () {
     assert.doesNotThrow(function () {
-      mime.lookup({ noteven: "once" })
-      mime.lookup(null)
-      mime.lookup(true)
-      mime.lookup(Infinity)
-    })
-  })
-})
-
-describe('.contentType()', function () {
-  it('html', function () {
-    assert.equal(set('html'), 'text/html; charset=utf-8')
-  })
-
-  it('text/html; charset=ascii', function () {
-    assert.equal(set('text/html; charset=ascii'), 'text/html; charset=ascii')
-  })
-
-  it('json', function () {
-    assert.equal(set('json'), 'application/json; charset=utf-8')
-  })
-
-  it('application/json', function () {
-    assert.equal(set('application/json'), 'application/json; charset=utf-8')
-  })
-
-  it('jade', function () {
-    assert.equal(set('jade'), 'text/jade; charset=utf-8')
-  })
-
-  it('should not error on non-string types', function () {
-    assert.doesNotThrow(function () {
-      set({ noteven: "once" })
-      set(null)
-      set(true)
-      set(Infinity)
+      lookup({ noteven: "once" })
+      lookup(null)
+      lookup(true)
+      lookup(Infinity)
     })
   })
 
   it('should return false for unknown types', function () {
-    assert.equal(set('.jalksdjflakjsdjfasdf'), false)
+    assert.equal(lookup('.jalksdjflakjsdjfasdf'), false)
+  })
+})
+
+describe('.extension()', function () {
+
+  it('should not error on non-string types', function () {
+    assert.doesNotThrow(function () {
+      extension({ noteven: "once" })
+      extension(null)
+      extension(true)
+      extension(Infinity)
+    })
+  })
+
+  it('should return false for unknown types', function () {
+    assert.equal(extension('.jalksdjflakjsdjfasdf'), false)
+  })
+})
+
+describe('.charset()', function () {
+
+  it('should not error on non-string types', function () {
+    assert.doesNotThrow(function () {
+      charset({ noteven: "once" })
+      charset(null)
+      charset(true)
+      charset(Infinity)
+    })
+  })
+
+  it('should return false for unknown types', function () {
+    assert.equal(charset('.jalksdjflakjsdjfasdf'), false)
+  })
+})
+
+describe('.contentType()', function () {
+
+  it('html', function () {
+    assert.equal(contentType('html'), 'text/html; charset=utf-8')
+  })
+
+  it('text/html; charset=ascii', function () {
+    assert.equal(contentType('text/html; charset=ascii'), 'text/html; charset=ascii')
+  })
+
+  it('json', function () {
+    assert.equal(contentType('json'), 'application/json; charset=utf-8')
+  })
+
+  it('application/json', function () {
+    assert.equal(contentType('application/json'), 'application/json; charset=utf-8')
+  })
+
+  it('jade', function () {
+    assert.equal(contentType('jade'), 'text/jade; charset=utf-8')
+  })
+
+  it('should not error on non-string types', function () {
+    assert.doesNotThrow(function () {
+      contentType({ noteven: "once" })
+      contentType(null)
+      contentType(true)
+      contentType(Infinity)
+    })
+  })
+
+  it('should return false for unknown types', function () {
+    assert.equal(contentType('.jalksdjflakjsdjfasdf'), false)
   })
 })
