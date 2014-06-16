@@ -8,6 +8,7 @@ even if it's from an unofficial source.
 - `text/coffeescript` - http://coffeescript.org/#scripts
 - `text/x-handlebars-template` - https://handlebarsjs.com/#getting-started
 - `text/x-sass` & `text/x-scss` - https://github.com/janlelis/rubybuntu-mime/blob/master/sass.xml
+- `text.jsx` - http://facebook.github.io/react/docs/getting-started.html [[2]](https://github.com/facebook/react/blob/f230e0a03154e6f8a616e0da1fb3d97ffa1a6472/vendor/browser-transforms.js#L210)
 
 [Sources for node.json types](https://github.com/broofa/node-mime/blob/master/types/node.types)
 

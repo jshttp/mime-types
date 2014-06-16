@@ -20,5 +20,8 @@
   ],
   "text/x-handlebars-template": [
     "hbs"
+  ],
+  "text/jsx": [
+    "jsx"
   ]
 }
