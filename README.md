@@ -1,4 +1,5 @@
-# mime-types [![Build Status](https://travis-ci.org/expressjs/mime-types.svg?branch=master)](https://travis-ci.org/expressjs/mime-types) [![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types)
+# mime-types
+[![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types) [![Build Status](https://travis-ci.org/expressjs/mime-types.svg?branch=master)](https://travis-ci.org/expressjs/mime-types)
 
 The ultimate javascript content-type utility.
 
@@ -8,10 +9,10 @@ The ultimate javascript content-type utility.
 $ npm install mime-types
 ```
 
-#### Similar to [mime](https://github.com/broofa/node-mime) except:
+#### Similar to [node-mime](https://github.com/broofa/node-mime), except:
 
+- __No fallbacks.__ Instead of naively returning the first available type, `mime-types` simply returns `false`, so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
 - No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`.
-- No fallbacks, so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
 - Additional mime types are added such as jade and stylus. Feel free to add more!
 - Browser support via Browserify and Component by converting lists to JSON files.
 
