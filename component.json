@@ -1,6 +1,6 @@
 {
   "name": "mime-types",
-  "description": "ultimate mime type utility",
+  "description": "The ultimate javascript content-type utility.",
   "version": "0.1.0",
   "author": {
     "name": "Jonathan Ong",
