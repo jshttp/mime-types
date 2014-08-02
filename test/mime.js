@@ -59,7 +59,8 @@ eq('font/opentype', mime.lookup('file.otf'));
 //
 
 eq('UTF-8', mime.charset('text/plain'));
-eq(false, mime.charset(mime.types.js));
+eq('UTF-8', mime.charset(mime.types.js));
 eq('UTF-8', mime.charset('application/json'))
 eq('UTF-8', mime.charsets.lookup('text/something'));
+eq(false, mime.charsets.lookup('application/octet-stream'));
 // eq('fallback', mime.charset('application/octet-stream', 'fallback'));
