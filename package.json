@@ -16,12 +16,12 @@
       "twitter": "https://twitter.com/fishrock123"
     }
   ],
-  "repository": "expressjs/mime-types",
+  "repository": "jshttp/mime-types",
   "license": "MIT",
-  "main": "lib",
+  "dependencies": {
+    "mime-db": "~1.0.1"
+  },
   "devDependencies": {
-    "co": "3",
-    "cogent": "0",
     "mocha": "1",
     "should": "3"
   },
@@ -29,6 +29,13 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "make test"
-  }
+    "test": "mocha --reporter spec --require should test/test.js",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --require should test/test.js",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot --require should test/test.js"
+  },
+  "files": ["index.js"],
+  "keywords": [
+    "mime",
+    "types"
+  ]
 }

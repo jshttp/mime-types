@@ -1,5 +1,11 @@
 # mime-types
-[![NPM version](https://badge.fury.io/js/mime-types.svg)](https://badge.fury.io/js/mime-types) [![Build Status](https://travis-ci.org/expressjs/mime-types.svg?branch=master)](https://travis-ci.org/expressjs/mime-types)
+
+[![NPM version][npm-image]][npm-url]
+[![Build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Dependency Status][david-image]][david-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
 The ultimate javascript content-type utility.
 
@@ -11,22 +17,17 @@ $ npm install mime-types
 
 #### Similar to [node-mime](https://github.com/broofa/node-mime), except:
 
-- __No fallbacks.__ Instead of naively returning the first available type, `mime-types` simply returns `false`, so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
+- __No fallbacks.__ Instead of naively returning the first available type, `mime-types` simply returns `false`,
+  so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
 - No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`.
-- Additional mime types are added such as jade and stylus. Feel free to add more!
-- Browser support via Browserify and Component by converting lists to JSON files.
+- Additional mime types are added such as jade and stylus via [mime-db](https://github.com/jshttp/mime-db)
 
 Otherwise, the API is compatible.
 
 ### Adding Types
 
-If you'd like to add additional types,
-simply create a PR adding the type to `custom.json` and
-a reference link to the [sources](SOURCES.md).
-
-Do __NOT__ edit `mime.json` or `node.json`.
-Those are pulled using `build.js`.
-You should only touch `custom.json`.
+All mime types are based on [mime-db](https://github.com/jshttp/mime-db),
+so open a PR there if you'd like to add mime types.
 
 ## API
 
@@ -74,28 +75,31 @@ Lookup the implied default charset of a content-type.
 mime.charset('text/x-markdown') // 'UTF-8'
 ```
 
-### mime.types[extension] = type
+### var type = mime.types[extension]
 
 A map of content-types by extension.
 
-### mime.extensions[type] = [extensions]
+### [extensions...] = mime.extensions[type]
 
 A map of extensions by content-type.
-
-### mime.define(types)
-
-Globally add definitions.
-`types` must be an object of the form:
-
-```js
-{
-  "<content-type>": [extensions...],
-  "<content-type>": [extensions...]
-}
-```
-
-See the `.json` files in `lib/` for examples.
 
 ## License
 
 [MIT](LICENSE)
+
+[npm-image]: https://img.shields.io/npm/v/mime-types.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/mime-types
+[github-tag]: http://img.shields.io/github/tag/jshttp/mime-types.svg?style=flat-square
+[github-url]: https://github.com/jshttp/mime-types/tags
+[travis-image]: https://img.shields.io/travis/jshttp/mime-types.svg?style=flat-square
+[travis-url]: https://travis-ci.org/jshttp/mime-types
+[coveralls-image]: https://img.shields.io/coveralls/jshttp/mime-types.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/jshttp/mime-types?branch=master
+[david-image]: http://img.shields.io/david/jshttp/mime-types.svg?style=flat-square
+[david-url]: https://david-dm.org/jshttp/mime-types
+[license-image]: http://img.shields.io/npm/l/mime-types.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/mime-types.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/mime-types
+[gittip-image]: https://img.shields.io/gittip/jonathanong.svg?style=flat-square
+[gittip-url]: https://www.gittip.com/jonathanong/

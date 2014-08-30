@@ -8,6 +8,10 @@ var extension = mime.extension
 var charset = mime.charset
 var contentType = mime.contentType
 
+it('should pass most of node-mime\'s tests', function () {
+  require('./mime')
+})
+
 describe('.lookup()', function () {
 
   it('jade', function () {

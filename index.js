@@ -1,20 +1,24 @@
 
+var db = require('mime-db')
+
 // types[extension] = type
 exports.types = Object.create(null)
 // extensions[type] = [extensions]
 exports.extensions = Object.create(null)
-// define more mime types
-exports.define = define
 
-// store the json files
-exports.json = {
-  mime: require('./mime.json'),
-  node: require('./node.json'),
-  custom: require('./custom.json'),
-}
+Object.keys(db).forEach(function (name) {
+  var mime = db[name]
+  var exts = mime.extensions
+  if (!exts || !exts.length) return
+  exports.extensions[name] = exts
+  exts.forEach(function (ext) {
+    exports.types[ext] = name
+  })
+})
 
 exports.lookup = function (string) {
   if (!string || typeof string !== "string") return false
+  // remove any leading paths, though we should just use path.basename
   string = string.replace(/.*[\.\/\\]/, '').toLowerCase()
   if (!string) return false
   return exports.types[string] || false
@@ -22,6 +26,7 @@ exports.lookup = function (string) {
 
 exports.extension = function (type) {
   if (!type || typeof type !== "string") return false
+  // to do: use media-typer
   type = type.match(/^\s*([^;\s]*)(?:;|\s|$)/)
   if (!type) return false
   var exts = exports.extensions[type[1].toLowerCase()]
@@ -31,11 +36,8 @@ exports.extension = function (type) {
 
 // type has to be an exact mime type
 exports.charset = function (type) {
-  // special cases
-  switch (type) {
-    case 'application/json': return 'UTF-8'
-    case 'application/javascript': return 'UTF-8'
-  }
+  var mime = db[type]
+  if (mime && mime.charset) return mime.charset
 
   // default text/* to utf-8
   if (/^text\//.test(type)) return 'UTF-8'
@@ -48,6 +50,7 @@ exports.charsets = {
   lookup: exports.charset
 }
 
+// to do: maybe use set-type module or something
 exports.contentType = function (type) {
   if (!type || typeof type !== "string") return false
   if (!~type.indexOf('/')) type = exports.lookup(type)
@@ -57,19 +60,4 @@ exports.contentType = function (type) {
     if (charset) type += '; charset=' + charset.toLowerCase()
   }
   return type
-}
-
-define(exports.json.mime)
-define(exports.json.node)
-define(exports.json.custom)
-
-function define(json) {
-  Object.keys(json).forEach(function (type) {
-    var exts = json[type] || []
-    exports.extensions[type] = exports.extensions[type] || []
-    exts.forEach(function (ext) {
-      if (!~exports.extensions[type].indexOf(ext)) exports.extensions[type].push(ext)
-      exports.types[ext] = type
-    })
-  })
 }
