@@ -2,22 +2,16 @@
   "name": "mime-types",
   "description": "The ultimate javascript content-type utility.",
   "version": "2.0.0",
-  "author": {
-    "name": "Jonathan Ong",
-    "email": "me@jongleberry.com",
-    "url": "http://jongleberry.com",
-    "twitter": "https://twitter.com/jongleberry"
-  },
   "contributors": [
-    {
-      "name": "Jeremiah Senkpiel",
-      "email": "fishrock123@rocketmail.com",
-      "url": "https://searchbeam.jit.su",
-      "twitter": "https://twitter.com/fishrock123"
-    }
+    "Jeremiah Senkpiel <fishrock123@rocketmail.com> (https://searchbeam.jit.su)",
+    "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "mime",
+    "types"
   ],
   "repository": "jshttp/mime-types",
-  "license": "MIT",
   "dependencies": {
     "mime-db": "~1.0.1"
   },
@@ -26,6 +20,9 @@
     "mocha": "1",
     "should": "3"
   },
+  "files": [
+    "index.js"
+  ],
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -33,10 +30,5 @@
     "test": "mocha --reporter spec --require should test/test.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --require should test/test.js",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot --require should test/test.js"
-  },
-  "files": ["index.js"],
-  "keywords": [
-    "mime",
-    "types"
-  ]
+  }
 }
