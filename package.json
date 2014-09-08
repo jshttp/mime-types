@@ -21,6 +21,8 @@
     "should": "3"
   },
   "files": [
+    "HISTORY.md",
+    "LICENSE",
     "index.js"
   ],
   "engines": {
