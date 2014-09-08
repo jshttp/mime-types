@@ -14,6 +14,7 @@ Similar to [node-mime](https://github.com/broofa/node-mime), except:
   so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
 - No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`.
 - Additional mime types are added such as jade and stylus via [mime-db](https://github.com/jshttp/mime-db)
+- No `.define()` functionality
 
 Otherwise, the API is compatible.
 
