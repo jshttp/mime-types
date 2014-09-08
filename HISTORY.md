@@ -1,6 +1,26 @@
-
 2.0.0 / 2014-09-02
 ==================
 
- * use mime-db
- * remove .define()
+  * Use `mime-db`
+  * Remove `.define()`
+
+1.0.2 / 2014-08-04
+==================
+
+  * Set charset=utf-8 for `text/javascript`
+
+1.0.1 / 2014-06-24
+==================
+
+  * Add `text/jsx` type
+
+1.0.0 / 2014-05-12
+==================
+
+  * Return `false` for unknown types
+  * Set charset=utf-8 for `application/json`
+
+0.1.0 / 2014-05-02
+==================
+
+  * Initial release
