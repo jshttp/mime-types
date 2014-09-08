@@ -17,8 +17,7 @@
   },
   "devDependencies": {
     "istanbul": "0",
-    "mocha": "1",
-    "should": "3"
+    "mocha": "1"
   },
   "files": [
     "HISTORY.md",
@@ -29,8 +28,8 @@
     "node": ">= 0.6"
   },
   "scripts": {
-    "test": "mocha --reporter spec --require should test/test.js",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --require should test/test.js",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot --require should test/test.js"
+    "test": "mocha --reporter spec test/test.js",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/test.js",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/test.js"
   }
 }
