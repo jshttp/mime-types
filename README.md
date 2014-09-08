@@ -8,13 +8,7 @@
 
 The ultimate javascript content-type utility.
 
-### Install
-
-```sh
-$ npm install mime-types
-```
-
-#### Similar to [node-mime](https://github.com/broofa/node-mime), except:
+Similar to [node-mime](https://github.com/broofa/node-mime), except:
 
 - __No fallbacks.__ Instead of naively returning the first available type, `mime-types` simply returns `false`,
   so do `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
@@ -23,7 +17,13 @@ $ npm install mime-types
 
 Otherwise, the API is compatible.
 
-### Adding Types
+## Install
+
+```sh
+$ npm install mime-types
+```
+
+## Adding Types
 
 All mime types are based on [mime-db](https://github.com/jshttp/mime-db),
 so open a PR there if you'd like to add mime types.
