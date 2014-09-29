@@ -1,3 +1,11 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.1.0
+    - Add new mime types
+    - Add additional compressible
+    - Update charsets
+
 2.0.1 / 2014-09-07
 ==================
 
