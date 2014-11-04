@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "istanbul": "0",
-    "mocha": "1"
+    "mocha": "~1.21.5"
   },
   "files": [
     "HISTORY.md",
