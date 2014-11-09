@@ -13,7 +13,7 @@
   ],
   "repository": "jshttp/mime-types",
   "dependencies": {
-    "mime-db": "~1.1.0"
+    "mime-db": "~1.2.0"
   },
   "devDependencies": {
     "istanbul": "0",
