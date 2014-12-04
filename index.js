@@ -53,7 +53,7 @@ exports.charsets = {
 // to do: maybe use set-type module or something
 exports.contentType = function (type) {
   if (!type || typeof type !== "string") return false
-  if (!~type.indexOf('/')) type = exports.lookup(type)
+  if (!~type.indexOf(';')) type = exports.lookup(type)
   if (!type) return false
   if (!~type.indexOf('charset')) {
     var charset = exports.charset(type)

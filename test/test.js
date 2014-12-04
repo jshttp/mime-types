@@ -89,6 +89,10 @@ describe('.contentType()', function () {
     assert.equal(contentType('jade'), 'text/jade; charset=utf-8')
   })
 
+  it('path/to/a/file.json', function () {
+    assert.equal(contentType('path/to/a/file.json'), 'application/json; charset=utf-8')
+  });
+
   it('should not error on non-string types', function () {
     assert.doesNotThrow(function () {
       contentType({ noteven: "once" })

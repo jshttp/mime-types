@@ -52,11 +52,11 @@ mime.lookup('cats') // false
 
 ### mime.contentType(type)
 
-Create a full content-type header given a content-type or extension.
+Create a full content-type header given a content-type, extension, or file path.
 
 ```js
 mime.contentType('markdown')  // 'text/x-markdown; charset=utf-8'
-mime.contentType('file.json') // 'application/json; charset=utf-8'
+mime.contentType('path/to/file.json') // 'application/json; charset=utf-8'
 ```
 
 ### mime.extension(type)
