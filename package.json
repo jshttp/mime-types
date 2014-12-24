@@ -3,6 +3,7 @@
   "description": "The ultimate javascript content-type utility.",
   "version": "2.0.4",
   "contributors": [
+    "Douglas Christopher Wilson <doug@somethingdoug.com>",
     "Jeremiah Senkpiel <fishrock123@rocketmail.com> (https://searchbeam.jit.su)",
     "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
   ],
