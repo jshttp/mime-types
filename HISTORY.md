@@ -1,5 +1,5 @@
-unreleased
-==========
+2.0.5 / 2014-12-29
+==================
 
   * deps: mime-db@~1.3.1
     - Fix missing extensions
