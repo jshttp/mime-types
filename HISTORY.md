@@ -1,3 +1,11 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.4.0
+    - Add new mime types
+    - Fix various invalid MIME type entries
+    - Remove example template MIME types
+
 2.0.5 / 2014-12-29
 ==================
 
