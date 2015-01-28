@@ -1,54 +1,101 @@
 
 var assert = require('assert')
+var mimeTypes = require('..')
 
-var mime = require('..')
+describe('mimeTypes', function () {
+  describe('.extension(path)', function () {
+    it('should return extension for mime type', function () {
+      assert.equal(mimeTypes.extension('text/html'), 'html')
+    })
 
-var lookup = mime.lookup
-var extension = mime.extension
-var charset = mime.charset
-var contentType = mime.contentType
+    it('should return false for unknown type', function () {
+      assert.strictEqual(mimeTypes.extension('application/x-bogus'), false)
+    })
+
+    it('should return false for non-type string', function () {
+      assert.strictEqual(mimeTypes.extension('bogus'), false)
+    })
+
+    it('should return false for non-strings', function () {
+      assert.strictEqual(mimeTypes.extension(null), false)
+      assert.strictEqual(mimeTypes.extension(undefined), false)
+      assert.strictEqual(mimeTypes.extension(42), false)
+      assert.strictEqual(mimeTypes.extension({}), false)
+    })
+  })
+
+  describe('.lookup(extension)', function () {
+    it('should return mime type for ".html"', function () {
+      assert.equal(mimeTypes.lookup('.html'), 'text/html')
+    })
+
+    it('should return mime type for ".js"', function () {
+      assert.equal(mimeTypes.lookup('.js'), 'application/javascript')
+    })
+
+    it('should return mime type for ".json"', function () {
+      assert.equal(mimeTypes.lookup('.json'), 'application/json')
+    })
+
+    it('should return mime type for ".txt"', function () {
+      assert.equal(mimeTypes.lookup('.txt'), 'text/plain')
+    })
+
+    it('should return mime type for ".xml"', function () {
+      assert.equal(mimeTypes.lookup('.xml'), 'application/xml')
+    })
+
+    it('should work without the leading dot', function () {
+      assert.equal(mimeTypes.lookup('html'), 'text/html')
+      assert.equal(mimeTypes.lookup('xml'), 'application/xml')
+    })
+
+    it('should be case insensitive', function () {
+      assert.equal(mimeTypes.lookup('HTML'), 'text/html')
+      assert.equal(mimeTypes.lookup('.Xml'), 'application/xml')
+    })
+
+    it('should return false for unknown extension', function () {
+      assert.strictEqual(mimeTypes.lookup('.bogus'), false)
+      assert.strictEqual(mimeTypes.lookup('bogus'), false)
+    })
+
+    it('should return false for non-strings', function () {
+      assert.strictEqual(mimeTypes.lookup(null), false)
+      assert.strictEqual(mimeTypes.lookup(undefined), false)
+      assert.strictEqual(mimeTypes.lookup(42), false)
+      assert.strictEqual(mimeTypes.lookup({}), false)
+    })
+  })
+
+  describe('.lookup(path)', function () {
+    it('should return mime type for file name', function () {
+      assert.equal(mimeTypes.lookup('page.html'), 'text/html')
+    })
+
+    it('should return mime type for relative path', function () {
+      assert.equal(mimeTypes.lookup('path/to/page.html'), 'text/html')
+    })
+
+    it('should return mime type for absolute path', function () {
+      assert.equal(mimeTypes.lookup('/path/to/page.html'), 'text/html')
+    })
+
+    it('should be case insensitive', function () {
+      assert.equal(mimeTypes.lookup('/path/to/PAGE.HTML'), 'text/html')
+    })
+
+    it('should return false for unknown extension', function () {
+      assert.strictEqual(mimeTypes.lookup('/path/to/file.bogus'), false)
+    })
+  })
+})
+
+var charset = mimeTypes.charset
+var contentType = mimeTypes.contentType
 
 it('should pass most of node-mime\'s tests', function () {
   require('./mime')
-})
-
-describe('.lookup()', function () {
-
-  it('jade', function () {
-    assert.equal(lookup('jade'), 'text/jade')
-    assert.equal(lookup('.jade'), 'text/jade')
-    assert.equal(lookup('file.jade'), 'text/jade')
-    assert.equal(lookup('folder/file.jade'), 'text/jade')
-  })
-
-  it('should not error on non-string types', function () {
-    assert.doesNotThrow(function () {
-      lookup({ noteven: "once" })
-      lookup(null)
-      lookup(true)
-      lookup(Infinity)
-    })
-  })
-
-  it('should return false for unknown types', function () {
-    assert.equal(lookup('.jalksdjflakjsdjfasdf'), false)
-  })
-})
-
-describe('.extension()', function () {
-
-  it('should not error on non-string types', function () {
-    assert.doesNotThrow(function () {
-      extension({ noteven: "once" })
-      extension(null)
-      extension(true)
-      extension(Infinity)
-    })
-  })
-
-  it('should return false for unknown types', function () {
-    assert.equal(extension('.jalksdjflakjsdjfasdf'), false)
-  })
 })
 
 describe('.charset()', function () {
