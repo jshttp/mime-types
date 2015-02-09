@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.7.0
+    - Add new mime types
+    - Community extensions ownership transferred from `node-mime`
+
 2.0.8 / 2015-01-29
 ==================
 
