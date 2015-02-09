@@ -8,6 +8,7 @@ matrix:
   allow_failures:
     - node_js: "0.11"
   fast_finish: true
+sudo: false
 script:
   - "test $TRAVIS_NODE_VERSION != '0.6' || npm test"
   - "test $TRAVIS_NODE_VERSION  = '0.6' || npm run-script test-travis"
