@@ -1,63 +1,156 @@
+/*!
+ * mime-types
+ * Copyright(c) 2014 Jonathan Ong
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ * @private
+ */
 
 var db = require('mime-db')
 
-// types[extension] = type
-exports.types = Object.create(null)
-// extensions[type] = [extensions]
+/**
+ * Module exports.
+ * @public
+ */
+
+exports.charset = charset
+exports.charsets = { lookup: charset }
+exports.contentType = contentType
+exports.extension = extension
 exports.extensions = Object.create(null)
+exports.lookup = lookup
+exports.types = Object.create(null)
 
-Object.keys(db).forEach(function (name) {
-  var mime = db[name]
-  var exts = mime.extensions
-  if (!exts || !exts.length) return
-  exports.extensions[name] = exts
-  exts.forEach(function (ext) {
-    exports.types[ext] = name
-  })
-})
+// Populate the extensions/types maps
+populateMaps(exports.extensions, exports.types)
 
-exports.lookup = function (string) {
-  if (!string || typeof string !== "string") return false
-  // remove any leading paths, though we should just use path.basename
-  string = string.replace(/.*[\.\/\\]/, '').toLowerCase()
-  if (!string) return false
-  return exports.types[string] || false
-}
+/**
+ * Get the default charset for a MIME type.
+ *
+ * @param {string} type
+ * @return {boolean|string}
+ */
 
-exports.extension = function (type) {
-  if (!type || typeof type !== "string") return false
-  // to do: use media-typer
-  type = type.match(/^\s*([^;\s]*)(?:;|\s|$)/)
-  if (!type) return false
-  var exts = exports.extensions[type[1].toLowerCase()]
-  if (!exts || !exts.length) return false
-  return exts[0]
-}
-
-// type has to be an exact mime type
-exports.charset = function (type) {
+function charset(type) {
   var mime = db[type]
-  if (mime && mime.charset) return mime.charset
+
+  if (mime && mime.charset) {
+    return mime.charset
+  }
 
   // default text/* to utf-8
-  if (/^text\//.test(type)) return 'UTF-8'
+  if (/^text\//.test(type)) {
+    return 'UTF-8'
+  }
 
   return false
 }
 
-// backwards compatibility
-exports.charsets = {
-  lookup: exports.charset
+/**
+ * Create a full Content-Type header given a MIME type or extension.
+ *
+ * @param {string} str
+ * @return {boolean|string}
+ */
+
+function contentType(str) {
+  // TODO: should this even be in this module?
+  if (!str || typeof str !== 'string') {
+    return false
+  }
+
+  var mime = str.indexOf('/') === -1
+    ? exports.lookup(str)
+    : str
+
+  if (!mime) {
+    return false
+  }
+
+  // TODO: use content-type or other module
+  if (mime.indexOf('charset') === -1) {
+    var charset = exports.charset(mime)
+    if (charset) mime += '; charset=' + charset.toLowerCase()
+  }
+
+  return mime
 }
 
-// to do: maybe use set-type module or something
-exports.contentType = function (type) {
-  if (!type || typeof type !== "string") return false
-  if (!~type.indexOf('/')) type = exports.lookup(type)
-  if (!type) return false
-  if (!~type.indexOf('charset')) {
-    var charset = exports.charset(type)
-    if (charset) type += '; charset=' + charset.toLowerCase()
+/**
+ * Get the default extension for a MIME type.
+ *
+ * @param {string} type
+ * @return {boolean|string}
+ */
+
+function extension(type) {
+  if (!type || typeof type !== 'string') {
+    return false
   }
-  return type
+
+  // TODO: use media-typer
+  var match = type.match(/^\s*([^;\s]*)(?:;|\s|$)/)
+
+  if (!match) {
+    return false
+  }
+
+  // get extensions
+  var exts = exports.extensions[match[1].toLowerCase()]
+
+  if (!exts || !exts.length) {
+    return false
+  }
+
+  return exts[0]
+}
+
+/**
+ * Lookup the MIME type for a file name/extension.
+ *
+ * @param {string} name
+ * @return {boolean|string}
+ */
+
+function lookup(name) {
+  if (!name || typeof name !== 'string') {
+    return false
+  }
+
+  // remove any leading paths, though we should just use path.basename
+  var ext = name.replace(/.*[\.\/\\]/, '').toLowerCase()
+
+  if (!ext) {
+    return false
+  }
+
+  return exports.types[ext] || false
+}
+
+/**
+ * Populate the extensions and types maps.
+ * @private
+ */
+
+function populateMaps(extensions, types) {
+  Object.keys(db).forEach(function forEachMimeType(type) {
+    var mime = db[type]
+    var exts = mime.extensions
+
+    if (!exts || !exts.length) {
+      return
+    }
+
+    // mime -> extensions
+    extensions[type] = exts
+
+    // extension -> mime
+    exts.forEach(function forEachExtension(ext) {
+      types[ext] = type
+    })
+  })
 }

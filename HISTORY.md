@@ -1,3 +1,8 @@
+unreleased
+==========
+
+  * Refactor internals for readability and no argument reassignment
+
 2.0.14 / 2015-06-06
 ===================
 
