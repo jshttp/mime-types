@@ -136,6 +136,9 @@ function lookup(path) {
  */
 
 function populateMaps(extensions, types) {
+  // source preference (least -> most)
+  var preference = ['apache', undefined, 'iana']
+
   Object.keys(db).forEach(function forEachMimeType(type) {
     var mime = db[type]
     var exts = mime.extensions
@@ -149,6 +152,17 @@ function populateMaps(extensions, types) {
 
     // extension -> mime
     exts.forEach(function forEachExtension(ext) {
+      if (types[ext]) {
+        var from = db[types[ext]].source
+        var to = mime.source
+
+        if (preference.indexOf(from) > preference.indexOf(to)) {
+          // skip the remapping
+          return
+        }
+      }
+
+      // set the extension -> mime
       types[ext] = type
     })
   })
