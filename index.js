@@ -153,10 +153,10 @@ function populateMaps(extensions, types) {
     // extension -> mime
     exts.forEach(function forEachExtension(ext) {
       if (types[ext]) {
-        var from = db[types[ext]].source
-        var to = mime.source
+        var from = preference.indexOf(db[types[ext]].source)
+        var to = preference.indexOf(mime.source)
 
-        if (preference.indexOf(from) > preference.indexOf(to)) {
+        if (from > to || (from === to && types[ext].substr(0, 12) === 'application/')) {
           // skip the remapping
           return
         }

@@ -37,6 +37,10 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.lookup('.json'), 'application/json')
     })
 
+    it('should return mime type for ".rtf"', function () {
+      assert.equal(mimeTypes.lookup('.rtf'), 'application/rtf')
+    })
+
     it('should return mime type for ".txt"', function () {
       assert.equal(mimeTypes.lookup('.txt'), 'text/plain')
     })
