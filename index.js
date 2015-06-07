@@ -156,7 +156,8 @@ function populateMaps(extensions, types) {
         var from = preference.indexOf(db[types[ext]].source)
         var to = preference.indexOf(mime.source)
 
-        if (from > to || (from === to && types[ext].substr(0, 12) === 'application/')) {
+        if (types[ext] !== 'application/octet-stream'
+          && from > to || (from === to && types[ext].substr(0, 12) === 'application/')) {
           // skip the remapping
           return
         }
