@@ -15,14 +15,6 @@ console.log(Object.keys(mime.extensions).length + ' types');
 console.log(Object.keys(mime.types).length + ' extensions\n');
 
 //
-// Test mime lookups
-//
-
-eq('text/plain', mime.lookup('.text.txt'));    // hidden file
-eq('text/plain', mime.lookup('/txt'));         // extension-less ()
-eq('text/plain', mime.lookup('\\txt'));        // Windows, extension-less
-
-//
 // Test extensions
 //
 

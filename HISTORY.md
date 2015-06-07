@@ -1,6 +1,8 @@
 unreleased
 ==========
 
+  * Fix incorrectly treating extension-less file name as extension
+    - i.e. `'path/to/json'` will no longer return `application/json`
   * Refactor internals for readability and no argument reassignment
 
 2.0.14 / 2015-06-06

@@ -3,7 +3,7 @@ var assert = require('assert')
 var mimeTypes = require('..')
 
 describe('mimeTypes', function () {
-  describe('.extension(path)', function () {
+  describe('.extension(type)', function () {
     it('should return extension for mime type', function () {
       assert.equal(mimeTypes.extension('text/html'), 'html')
     })
@@ -75,18 +75,39 @@ describe('mimeTypes', function () {
 
     it('should return mime type for relative path', function () {
       assert.equal(mimeTypes.lookup('path/to/page.html'), 'text/html')
+      assert.equal(mimeTypes.lookup('path\\to\\page.html'), 'text/html')
     })
 
     it('should return mime type for absolute path', function () {
       assert.equal(mimeTypes.lookup('/path/to/page.html'), 'text/html')
+      assert.equal(mimeTypes.lookup('C:\\path\\to\\page.html'), 'text/html')
     })
 
     it('should be case insensitive', function () {
       assert.equal(mimeTypes.lookup('/path/to/PAGE.HTML'), 'text/html')
+      assert.equal(mimeTypes.lookup('C:\\path\\to\\PAGE.HTML'), 'text/html')
     })
 
     it('should return false for unknown extension', function () {
       assert.strictEqual(mimeTypes.lookup('/path/to/file.bogus'), false)
+    })
+
+    it('should return false for path without extension', function () {
+      assert.strictEqual(mimeTypes.lookup('/path/to/json'), false)
+    })
+
+    describe('path with dotfile', function () {
+      it('should return false when extension-less', function () {
+        assert.strictEqual(mimeTypes.lookup('/path/to/.json'), false)
+      })
+
+      it('should return mime type when there is extension', function () {
+        assert.strictEqual(mimeTypes.lookup('/path/to/.config.json'), 'application/json')
+      })
+
+      it('should return mime type when there is extension, but no path', function () {
+        assert.strictEqual(mimeTypes.lookup('.config.json'), 'application/json')
+      })
     })
   })
 })

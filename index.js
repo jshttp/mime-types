@@ -11,6 +11,7 @@
  */
 
 var db = require('mime-db')
+var extname = require('path').extname
 
 /**
  * Module exports.
@@ -110,25 +111,27 @@ function extension(type) {
 }
 
 /**
- * Lookup the MIME type for a file name/extension.
+ * Lookup the MIME type for a file path/extension.
  *
- * @param {string} name
+ * @param {string} path
  * @return {boolean|string}
  */
 
-function lookup(name) {
-  if (!name || typeof name !== 'string') {
+function lookup(path) {
+  if (!path || typeof path !== 'string') {
     return false
   }
 
-  // remove any leading paths, though we should just use path.basename
-  var ext = name.replace(/.*[\.\/\\]/, '').toLowerCase()
+  // get the extension ("ext" or ".ext" or full path)
+  var extension = extname('x.' + path)
+    .toLowerCase()
+    .substr(1)
 
-  if (!ext) {
+  if (!extension) {
     return false
   }
 
-  return exports.types[ext] || false
+  return exports.types[extension] || false
 }
 
 /**
