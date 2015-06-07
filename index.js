@@ -96,12 +96,8 @@ function extension(type) {
   // TODO: use media-typer
   var match = type.match(/^\s*([^;\s]*)(?:;|\s|$)/)
 
-  if (!match) {
-    return false
-  }
-
   // get extensions
-  var exts = exports.extensions[match[1].toLowerCase()]
+  var exts = match && exports.extensions[match[1].toLowerCase()]
 
   if (!exts || !exts.length) {
     return false
