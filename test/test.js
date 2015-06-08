@@ -3,9 +3,33 @@ var assert = require('assert')
 var mimeTypes = require('..')
 
 describe('mimeTypes', function () {
+  describe('.charset(type)', function () {
+    it('should return "UTF-8" for "application/json"', function () {
+      assert.equal(mimeTypes.charset('application/json'), 'UTF-8')
+    })
+
+    it('should return "UTF-8" for "application/javascript"', function () {
+      assert.equal(mimeTypes.charset('application/javascript'), 'UTF-8')
+    })
+
+    it('should return "UTF-8" for "text/html"', function () {
+      assert.equal(mimeTypes.charset('text/html'), 'UTF-8')
+    })
+
+    it('should return "UTF-8" for any text/*', function () {
+      assert.equal(mimeTypes.charset('text/x-bogus'), 'UTF-8')
+    })
+
+    it('should return false for any application/octet-stream', function () {
+      assert.strictEqual(mimeTypes.charset('application/octet-stream'), false)
+    })
+  })
+
   describe('.extension(type)', function () {
     it('should return extension for mime type', function () {
       assert.equal(mimeTypes.extension('text/html'), 'html')
+      assert.equal(mimeTypes.extension(' text/html'), 'html')
+      assert.equal(mimeTypes.extension('text/html '), 'html')
     })
 
     it('should return false for unknown type', function () {
@@ -21,6 +45,14 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.extension(undefined), false)
       assert.strictEqual(mimeTypes.extension(42), false)
       assert.strictEqual(mimeTypes.extension({}), false)
+    })
+
+    it('should return extension for mime type with parameters', function () {
+      assert.equal(mimeTypes.extension('text/html;charset=UTF-8'), 'html')
+      assert.equal(mimeTypes.extension('text/HTML; charset=UTF-8'), 'html')
+      assert.equal(mimeTypes.extension('text/html; charset=UTF-8'), 'html')
+      assert.equal(mimeTypes.extension('text/html; charset=UTF-8 '), 'html')
+      assert.equal(mimeTypes.extension('text/html ; charset=UTF-8'), 'html')
     })
   })
 
@@ -118,10 +150,6 @@ describe('mimeTypes', function () {
 
 var charset = mimeTypes.charset
 var contentType = mimeTypes.contentType
-
-it('should pass most of node-mime\'s tests', function () {
-  require('./mime')
-})
 
 describe('.charset()', function () {
 
