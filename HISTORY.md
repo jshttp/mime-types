@@ -7,6 +7,9 @@ unreleased
   * Refactor internals for readability and no argument reassignment
   * Prefer `application/*` MIME types from the same source
   * Prefer any type over `application/octet-stream`
+  * deps: mime-db@~1.13.0
+    - Add nginx as a source
+    - Add new mime types
 
 2.0.14 / 2015-06-06
 ===================
