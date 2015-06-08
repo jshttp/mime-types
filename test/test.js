@@ -20,8 +20,19 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.charset('text/x-bogus'), 'UTF-8')
     })
 
+    it('should return false for unknown types', function () {
+      assert.strictEqual(mimeTypes.charset('application/x-bogus'), false)
+    })
+
     it('should return false for any application/octet-stream', function () {
       assert.strictEqual(mimeTypes.charset('application/octet-stream'), false)
+    })
+
+    it('should return false for invalid arguments', function () {
+      assert.strictEqual(mimeTypes.charset({}), false)
+      assert.strictEqual(mimeTypes.charset(null), false)
+      assert.strictEqual(mimeTypes.charset(true), false)
+      assert.strictEqual(mimeTypes.charset(42), false)
     })
   })
 
@@ -148,24 +159,7 @@ describe('mimeTypes', function () {
   })
 })
 
-var charset = mimeTypes.charset
 var contentType = mimeTypes.contentType
-
-describe('.charset()', function () {
-
-  it('should not error on non-string types', function () {
-    assert.doesNotThrow(function () {
-      charset({ noteven: "once" })
-      charset(null)
-      charset(true)
-      charset(Infinity)
-    })
-  })
-
-  it('should return false for unknown types', function () {
-    assert.equal(charset('.jalksdjflakjsdjfasdf'), false)
-  })
-})
 
 describe('.contentType()', function () {
 
