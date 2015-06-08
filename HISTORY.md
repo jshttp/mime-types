@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.1 / 2015-06-08
+==================
 
   * perf: fix deopt during mapping
 
