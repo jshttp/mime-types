@@ -8,6 +8,10 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.charset('application/json'), 'UTF-8')
     })
 
+    it('should return "UTF-8" for "application/json; foo=bar"', function () {
+      assert.equal(mimeTypes.charset('application/json; foo=bar'), 'UTF-8')
+    })
+
     it('should return "UTF-8" for "application/javascript"', function () {
       assert.equal(mimeTypes.charset('application/javascript'), 'UTF-8')
     })
@@ -76,6 +80,10 @@ describe('mimeTypes', function () {
   describe('.contentType(type)', function () {
     it('should attach charset to "application/json"', function () {
       assert.equal(mimeTypes.contentType('application/json'), 'application/json; charset=utf-8')
+    })
+
+    it('should attach charset to "application/json; foo=bar"', function () {
+      assert.equal(mimeTypes.contentType('application/json; foo=bar'), 'application/json; foo=bar; charset=utf-8')
     })
 
     it('should attach charset to "TEXT/HTML"', function () {

@@ -18,6 +18,7 @@ var extname = require('path').extname
  * @private
  */
 
+var extractTypeRegExp = /^\s*([^;\s]*)(?:;|\s|$)/
 var textTypeRegExp = /^text\//i
 
 /**
@@ -48,14 +49,16 @@ function charset(type) {
     return false
   }
 
-  var mime = db[type.toLowerCase()]
+  // TODO: use media-typer
+  var match = extractTypeRegExp.exec(type)
+  var mime = match && db[match[1].toLowerCase()]
 
   if (mime && mime.charset) {
     return mime.charset
   }
 
   // default text/* to utf-8
-  if (textTypeRegExp.test(type)) {
+  if (match && textTypeRegExp.test(match[1])) {
     return 'UTF-8'
   }
 
@@ -105,7 +108,7 @@ function extension(type) {
   }
 
   // TODO: use media-typer
-  var match = type.match(/^\s*([^;\s]*)(?:;|\s|$)/)
+  var match = extractTypeRegExp.exec(type)
 
   // get extensions
   var exts = match && exports.extensions[match[1].toLowerCase()]

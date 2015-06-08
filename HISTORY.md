@@ -3,6 +3,7 @@ unreleased
 
   * Fix incorrectly treating extension-less file name as extension
     - i.e. `'path/to/json'` will no longer return `application/json`
+  * Fix `.charset(type)` to accept parameters
   * Fix `.charset(type)` to match case-insensitive
   * Improve generation of extension to MIME mapping
   * Refactor internals for readability and no argument reassignment
