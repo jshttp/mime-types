@@ -86,7 +86,7 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.contentType('text/html'), 'text/html; charset=utf-8')
     })
 
-    it('should not alter to "text/html; charset=iso-8859-1"', function () {
+    it('should not alter "text/html; charset=iso-8859-1"', function () {
       assert.equal(mimeTypes.contentType('text/html; charset=iso-8859-1'), 'text/html; charset=iso-8859-1')
     })
 
