@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.0 / 2015-06-07
+==================
 
   * Fix incorrectly treating extension-less file name as extension
     - i.e. `'path/to/json'` will no longer return `application/json`
