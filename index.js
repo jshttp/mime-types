@@ -14,6 +14,13 @@ var db = require('mime-db')
 var extname = require('path').extname
 
 /**
+ * Module variables.
+ * @private
+ */
+
+var textTypeRegExp = /^text\//i
+
+/**
  * Module exports.
  * @public
  */
@@ -37,14 +44,18 @@ populateMaps(exports.extensions, exports.types)
  */
 
 function charset(type) {
-  var mime = db[type]
+  if (!type || typeof type !== 'string') {
+    return false
+  }
+
+  var mime = db[type.toLowerCase()]
 
   if (mime && mime.charset) {
     return mime.charset
   }
 
   // default text/* to utf-8
-  if (/^text\//.test(type)) {
+  if (textTypeRegExp.test(type)) {
     return 'UTF-8'
   }
 
