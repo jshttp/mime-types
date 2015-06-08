@@ -36,6 +36,53 @@ describe('mimeTypes', function () {
     })
   })
 
+  describe('.contentType(extension)', function () {
+    it('should return content-type for "html"', function () {
+      assert.equal(mimeTypes.contentType('html'), 'text/html; charset=utf-8')
+    })
+
+    it('should return content-type for ".html"', function () {
+      assert.equal(mimeTypes.contentType('.html'), 'text/html; charset=utf-8')
+    })
+
+    it('should return content-type for "jade"', function () {
+      assert.equal(mimeTypes.contentType('jade'), 'text/jade; charset=utf-8')
+    })
+
+    it('should return content-type for "json"', function () {
+      assert.equal(mimeTypes.contentType('json'), 'application/json; charset=utf-8')
+    })
+
+    it('should return false for unknown extensions', function () {
+      assert.strictEqual(mimeTypes.contentType('bogus'), false)
+    })
+
+    it('should return false for invalid arguments', function () {
+      assert.strictEqual(mimeTypes.contentType({}), false)
+      assert.strictEqual(mimeTypes.contentType(null), false)
+      assert.strictEqual(mimeTypes.contentType(true), false)
+      assert.strictEqual(mimeTypes.contentType(42), false)
+    })
+  })
+
+  describe('.contentType(type)', function () {
+    it('should attach charset to "application/json"', function () {
+      assert.equal(mimeTypes.contentType('application/json'), 'application/json; charset=utf-8')
+    })
+
+    it('should attach charset to "text/html"', function () {
+      assert.equal(mimeTypes.contentType('text/html'), 'text/html; charset=utf-8')
+    })
+
+    it('should not alter to "text/html; charset=iso-8859-1"', function () {
+      assert.equal(mimeTypes.contentType('text/html; charset=iso-8859-1'), 'text/html; charset=iso-8859-1')
+    })
+
+    it('should return type for unknown types', function () {
+      assert.equal(mimeTypes.contentType('application/x-bogus'), 'application/x-bogus')
+    })
+  })
+
   describe('.extension(type)', function () {
     it('should return extension for mime type', function () {
       assert.equal(mimeTypes.extension('text/html'), 'html')
@@ -156,43 +203,5 @@ describe('mimeTypes', function () {
         assert.strictEqual(mimeTypes.lookup('.config.json'), 'application/json')
       })
     })
-  })
-})
-
-var contentType = mimeTypes.contentType
-
-describe('.contentType()', function () {
-
-  it('html', function () {
-    assert.equal(contentType('html'), 'text/html; charset=utf-8')
-  })
-
-  it('text/html; charset=ascii', function () {
-    assert.equal(contentType('text/html; charset=ascii'), 'text/html; charset=ascii')
-  })
-
-  it('json', function () {
-    assert.equal(contentType('json'), 'application/json; charset=utf-8')
-  })
-
-  it('application/json', function () {
-    assert.equal(contentType('application/json'), 'application/json; charset=utf-8')
-  })
-
-  it('jade', function () {
-    assert.equal(contentType('jade'), 'text/jade; charset=utf-8')
-  })
-
-  it('should not error on non-string types', function () {
-    assert.doesNotThrow(function () {
-      contentType({ noteven: "once" })
-      contentType(null)
-      contentType(true)
-      contentType(Infinity)
-    })
-  })
-
-  it('should return false for unknown types', function () {
-    assert.equal(contentType('.jalksdjflakjsdjfasdf'), false)
   })
 })
