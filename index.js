@@ -167,20 +167,22 @@ function populateMaps(extensions, types) {
     extensions[type] = exts
 
     // extension -> mime
-    exts.forEach(function forEachExtension(ext) {
-      if (types[ext]) {
-        var from = preference.indexOf(db[types[ext]].source)
+    for (var i = 0; i < exts.length; i++) {
+      var extension = exts[i]
+
+      if (types[extension]) {
+        var from = preference.indexOf(db[types[extension]].source)
         var to = preference.indexOf(mime.source)
 
-        if (types[ext] !== 'application/octet-stream'
-          && from > to || (from === to && types[ext].substr(0, 12) === 'application/')) {
+        if (types[extension] !== 'application/octet-stream'
+          && from > to || (from === to && types[extension].substr(0, 12) === 'application/')) {
           // skip the remapping
           return
         }
       }
 
       // set the extension -> mime
-      types[ext] = type
-    })
+      types[extension] = type
+    }
   })
 }
