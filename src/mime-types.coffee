@@ -94,7 +94,7 @@ module.exports = class MimeTypes
   ###
   # Return all MIME types which matching a pattern
   #   [spec](http://tools.ietf.org/html/rfc2616#section-14.1)
-  # @param {string} the mime type pattern, For example "video/*", "audio/*", ..
+  # @param {string} pattern the mime type pattern, For example "video/*", "audio/*", ..
   # @return {array}
   ###
   glob: (pattern)->
@@ -102,6 +102,13 @@ module.exports = class MimeTypes
     result = Object.keys(@mimes).filter (name)->
       minimatch(name, pattern)
     result
+
+  ###
+  # Whether the mime type is exist.
+  # @param {string} type the mime type
+  # @return {boolean}
+  ###
+  exist: (type)-> @mimes.hasOwnProperty type
 
   # source preference (least -> most)
   refSources = [

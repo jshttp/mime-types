@@ -3,6 +3,12 @@ var assert = require('assert')
 var mimeTypes = require('..')
 
 describe('mimeTypes', function () {
+  describe('.exist(type)', function () {
+    it('should Test a mime type whether is exist', function () {
+      assert.equal(mimeTypes.exist('asas/ss'), false)
+      assert.equal(mimeTypes.exist('text/x-markdown'), true)
+    })
+  })
   describe('.glob(pattern)', function () {
     it('should Test glob searching', function () {
       assert.deepEqual(['application/octet-stream'], mimeTypes.glob('*/*'));
