@@ -19,10 +19,18 @@ textTypeRegExp = /^text\//i
 module.exports = class MimeTypes
   'use strict'
 
-  constructor: (db)->
+  constructor: (db, duplicationProcessWay)->
     return new MimeTypes db if not (this instanceof MimeTypes)
     defineProperty @, 'types', {}
     defineProperty @, 'mimes', {}
+
+    defineProperty @, 'dupDefault', 0
+    defineProperty @, 'dupSkip', 1
+    defineProperty @, 'dupOverwrite', 2
+    defineProperty @, 'dupAppend', 3
+    defineProperty @, 'dup', @dupDefault
+    if duplicationProcessWay and duplicationProcessWay in [0..3]
+      @dup = duplicationProcessWay
     @_load(db) if db
 
   ###
@@ -80,10 +88,10 @@ module.exports = class MimeTypes
     result
 
   ###
-  # Lookup the MIME type for a file path/extension.
+  # Lookup the MIME types for a file path/extension.
   #
   # @param {string} path
-  # @return {boolean|string}
+  # @return {undefined|string|array}
   ###
   lookup: (path) ->
     if path and isString path
@@ -127,9 +135,10 @@ module.exports = class MimeTypes
   #  * "compressible": true,
   #  * "extensions": ["js"]
   ###
-  define: (type, mime)->
+  define: (type, mime, dup)->
     return unless type and mime and mime.extensions and
       !@mimes.hasOwnProperty type
+    dup = @dup unless dup?
     exts = mime.extensions
     mime.extensions = [exts] unless isArray exts
     exts = []
@@ -137,18 +146,33 @@ module.exports = class MimeTypes
     for extension in mime.extensions
       t = @types[extension]
       if t
-        from = refSources.indexOf(@mimes[t].source)
-        to = refSources.indexOf(mime.source)
-        # skip the remapping
-        if t != 'application/octet-stream' and
-           from > to or from == to and t.substr(0, 12) == 'application/'
-          if process.env.DEBUG_MIME
-            console.warn """
-               defineMime(#{type}): the #{extension} extension is exists on #{t} skipped it.
-            """
-          continue 
+        switch dup
+          when @dupSkip
+            continue
+          when @dupAppend
+            t = [t] if isString t
+            t.push type unless type in t
+          when @dupOverwrite
+            t = type
+          when @dupDefault
+            t = t[0] if isArray t
+            from = refSources.indexOf(@mimes[t].source)
+            to = refSources.indexOf(mime.source)
+            # skip the remapping
+            if t != 'application/octet-stream' and
+               from > to or from == to and t.substr(0, 12) == 'application/'
+              if process.env.DEBUG_MIME
+                console.warn """
+                   defineMime(#{type}): the #{extension} extension is exists on
+                   #{t} skipped it.
+                """
+              continue
+            else
+              t = type
+      else
+        t = type
       # set the extension -> mime type name
-      @types[extension] = type
+      @types[extension] = t
       exts.push extension
     if exts.length
       mime.extensions = exts

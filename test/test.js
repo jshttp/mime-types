@@ -3,6 +3,31 @@ var assert = require('assert')
 var mimeTypes = require('..')
 
 describe('mimeTypes', function () {
+  describe('.define(type, object)', function () {
+    it('should define a mime type', function () {
+      assert.equal(mimeTypes.exist('1sas/ss'), false)
+      assert.ok(mimeTypes.define('1sas/ss', {extensions:['ss']}))
+      assert.equal(mimeTypes.exist('1sas/ss'), true)
+    })
+    it('should define a mime type and append duplication extension to the new type', function () {
+      assert.equal(mimeTypes.exist('1das/ss'), false)
+      assert.ok(mimeTypes.define('1das/ss', {extensions:['ss']}, mimeTypes.dupAppend))
+      assert.equal(mimeTypes.exist('1das/ss'), true)
+      assert.deepEqual(mimeTypes.types['ss'], ['1sas/ss', '1das/ss'])
+    })
+    it('should define a mime type and default duplcation process to the new type', function () {
+      assert.equal(mimeTypes.exist('3das/ss'), false)
+      assert.ok(mimeTypes.define('3das/ss', {extensions:['ss']}, mimeTypes.dd))
+      assert.equal(mimeTypes.exist('3das/ss'), true)
+      assert.deepEqual(mimeTypes.types['ss'], '3das/ss')
+    })
+    it('should define a mime type and overwrite duplication extension to the new type', function () {
+      assert.equal(mimeTypes.exist('2das/ss'), false)
+      assert.ok(mimeTypes.define('2das/ss', {extensions:['ss']}, mimeTypes.dupOverwrite))
+      assert.equal(mimeTypes.exist('2das/ss'), true)
+      assert.deepEqual(mimeTypes.types['ss'], '2das/ss')
+    })
+  })
   describe('.exist(type)', function () {
     it('should Test a mime type whether is exist', function () {
       assert.equal(mimeTypes.exist('asas/ss'), false)
