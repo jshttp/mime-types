@@ -9,7 +9,9 @@ describe('mimeTypes', function () {
       assert.notEqual(mimeTypes.glob('application/*').indexOf('application/json'), -1);
       assert.equal(mimeTypes.glob('application/*').length > 1, true);
       assert.deepEqual([], mimeTypes.glob('qwerty/*'));
-      assert.deepEqual(['qwerty/qwerty'], mimeTypes.glob('qwerty/qwerty'));
+      assert.deepEqual([], mimeTypes.glob('qwerty/qwerty'));
+      assert.deepEqual([], mimeTypes.glob('*/markdown'));
+      assert.deepEqual(['text/x-markdown'], mimeTypes.glob('*/x-markdown'));
     })
   })
   describe('.charset(type)', function () {

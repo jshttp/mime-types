@@ -3,8 +3,10 @@
 # @private
 ###
 mediaTyper  = require('media-typer')
+minimatch   = require('minimatch')
 isArray     = require('util-ex/lib/is/type/array')
 isString    = require('util-ex/lib/is/type/string')
+defineProperty = require('util-ex/lib/defineProperty')
 extname     = require('path').extname
 
 extractTypeRegExp = /^\s*([^;\s]*)(?:;|\s|$)/
@@ -19,8 +21,8 @@ module.exports = class MimeTypes
 
   constructor: (db)->
     return new MimeTypes db if not (this instanceof MimeTypes)
-    @types = {}
-    @mimes = {}
+    defineProperty @, 'types', {}
+    defineProperty @, 'mimes', {}
     @_load(db) if db
 
   ###
@@ -97,14 +99,9 @@ module.exports = class MimeTypes
   ###
   glob: (pattern)->
     return [ 'application/octet-stream' ] if pattern == '*/*'
-    slashIdx = pattern.indexOf('/')
-    if slashIdx == -1 or pattern.slice(slashIdx + 1) != '*'
-      return [ pattern ]
-    prefix = pattern.slice(0, slashIdx + 1)
     result = Object.keys(@mimes).filter (name)->
-      name.slice(0, slashIdx + 1) == prefix
+      minimatch(name, pattern)
     result
-
 
   # source preference (least -> most)
   refSources = [
