@@ -35,6 +35,7 @@
   "scripts": {
     "prepublish": "./node_modules/.bin/coffee -o lib -c src/*.coffee",
     "pretest": "./node_modules/.bin/coffee -o lib -c src/*.coffee",
+    "install": "./node_modules/.bin/coffee -o lib -c src/*.coffee",
     "test": "mocha --reporter spec test/test.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/test.js",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/test.js"
