@@ -3,48 +3,57 @@ var assert = require('assert')
 var mimeTypes = require('..')
 
 describe('mimeTypes', function () {
+  describe('.glob(pattern)', function () {
+    it('should Test glob searching', function () {
+      assert.deepEqual(['application/octet-stream'], mimeTypes.glob('*/*'));
+      assert.notEqual(mimeTypes.glob('application/*').indexOf('application/json'), -1);
+      assert.equal(mimeTypes.glob('application/*').length > 1, true);
+      assert.deepEqual([], mimeTypes.glob('qwerty/*'));
+      assert.deepEqual(['qwerty/qwerty'], mimeTypes.glob('qwerty/qwerty'));
+    })
+  })
   describe('.charset(type)', function () {
-    it('should return "UTF-8" for "application/json"', function () {
-      assert.equal(mimeTypes.charset('application/json'), 'UTF-8')
+    it('should return "utf-8" for "application/json"', function () {
+      assert.equal(mimeTypes.charset('application/json'), 'utf-8')
     })
 
-    it('should return "UTF-8" for "application/json; foo=bar"', function () {
-      assert.equal(mimeTypes.charset('application/json; foo=bar'), 'UTF-8')
+    it('should return "utf-8" for "application/json; foo=bar"', function () {
+      assert.equal(mimeTypes.charset('application/json; foo=bar'), 'utf-8')
     })
 
-    it('should return "UTF-8" for "application/javascript"', function () {
-      assert.equal(mimeTypes.charset('application/javascript'), 'UTF-8')
+    it('should return "utf-8" for "application/javascript"', function () {
+      assert.equal(mimeTypes.charset('application/javascript'), 'utf-8')
     })
 
-    it('should return "UTF-8" for "application/JavaScript"', function () {
-      assert.equal(mimeTypes.charset('application/JavaScript'), 'UTF-8')
+    it('should return "utf-8" for "application/JavaScript"', function () {
+      assert.equal(mimeTypes.charset('application/JavaScript'), 'utf-8')
     })
 
-    it('should return "UTF-8" for "text/html"', function () {
-      assert.equal(mimeTypes.charset('text/html'), 'UTF-8')
+    it('should return "utf-8" for "text/html"', function () {
+      assert.equal(mimeTypes.charset('text/html'), 'utf-8')
     })
 
-    it('should return "UTF-8" for "TEXT/HTML"', function () {
-      assert.equal(mimeTypes.charset('TEXT/HTML'), 'UTF-8')
+    it('should return "utf-8" for "TEXT/HTML"', function () {
+      assert.equal(mimeTypes.charset('TEXT/HTML'), 'utf-8')
     })
 
-    it('should return "UTF-8" for any text/*', function () {
-      assert.equal(mimeTypes.charset('text/x-bogus'), 'UTF-8')
+    it('should return "utf-8" for any text/*', function () {
+      assert.equal(mimeTypes.charset('text/x-bogus'), 'utf-8')
     })
 
-    it('should return false for unknown types', function () {
-      assert.strictEqual(mimeTypes.charset('application/x-bogus'), false)
+    it('should return undefined for unknown types', function () {
+      assert.strictEqual(mimeTypes.charset('application/x-bogus'), undefined)
     })
 
-    it('should return false for any application/octet-stream', function () {
-      assert.strictEqual(mimeTypes.charset('application/octet-stream'), false)
+    it('should return undefined for any application/octet-stream', function () {
+      assert.strictEqual(mimeTypes.charset('application/octet-stream'), undefined)
     })
 
-    it('should return false for invalid arguments', function () {
-      assert.strictEqual(mimeTypes.charset({}), false)
-      assert.strictEqual(mimeTypes.charset(null), false)
-      assert.strictEqual(mimeTypes.charset(true), false)
-      assert.strictEqual(mimeTypes.charset(42), false)
+    it('should return undefined for invalid arguments', function () {
+      assert.strictEqual(mimeTypes.charset({}), undefined)
+      assert.strictEqual(mimeTypes.charset(null), undefined)
+      assert.strictEqual(mimeTypes.charset(true), undefined)
+      assert.strictEqual(mimeTypes.charset(42), undefined)
     })
   })
 
@@ -65,15 +74,15 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.contentType('json'), 'application/json; charset=utf-8')
     })
 
-    it('should return false for unknown extensions', function () {
-      assert.strictEqual(mimeTypes.contentType('bogus'), false)
+    it('should return undefined for unknown extensions', function () {
+      assert.strictEqual(mimeTypes.contentType('bogus'), undefined)
     })
 
-    it('should return false for invalid arguments', function () {
-      assert.strictEqual(mimeTypes.contentType({}), false)
-      assert.strictEqual(mimeTypes.contentType(null), false)
-      assert.strictEqual(mimeTypes.contentType(true), false)
-      assert.strictEqual(mimeTypes.contentType(42), false)
+    it('should return undefined for invalid arguments', function () {
+      assert.strictEqual(mimeTypes.contentType({}), undefined)
+      assert.strictEqual(mimeTypes.contentType(null), undefined)
+      assert.strictEqual(mimeTypes.contentType(true), undefined)
+      assert.strictEqual(mimeTypes.contentType(42), undefined)
     })
   })
 
@@ -110,27 +119,27 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.extension('text/html '), 'html')
     })
 
-    it('should return false for unknown type', function () {
-      assert.strictEqual(mimeTypes.extension('application/x-bogus'), false)
+    it('should return undefined for unknown type', function () {
+      assert.strictEqual(mimeTypes.extension('application/x-bogus'), undefined)
     })
 
-    it('should return false for non-type string', function () {
-      assert.strictEqual(mimeTypes.extension('bogus'), false)
+    it('should return undefined for non-type string', function () {
+      assert.strictEqual(mimeTypes.extension('bogus'), undefined)
     })
 
-    it('should return false for non-strings', function () {
-      assert.strictEqual(mimeTypes.extension(null), false)
-      assert.strictEqual(mimeTypes.extension(undefined), false)
-      assert.strictEqual(mimeTypes.extension(42), false)
-      assert.strictEqual(mimeTypes.extension({}), false)
+    it('should return undefined for non-strings', function () {
+      assert.strictEqual(mimeTypes.extension(null), undefined)
+      assert.strictEqual(mimeTypes.extension(undefined), undefined)
+      assert.strictEqual(mimeTypes.extension(42), undefined)
+      assert.strictEqual(mimeTypes.extension({}), undefined)
     })
 
     it('should return extension for mime type with parameters', function () {
-      assert.equal(mimeTypes.extension('text/html;charset=UTF-8'), 'html')
-      assert.equal(mimeTypes.extension('text/HTML; charset=UTF-8'), 'html')
-      assert.equal(mimeTypes.extension('text/html; charset=UTF-8'), 'html')
-      assert.equal(mimeTypes.extension('text/html; charset=UTF-8 '), 'html')
-      assert.equal(mimeTypes.extension('text/html ; charset=UTF-8'), 'html')
+      assert.equal(mimeTypes.extension('text/html;charset=utf-8'), 'html')
+      assert.equal(mimeTypes.extension('text/HTML; charset=utf-8'), 'html')
+      assert.equal(mimeTypes.extension('text/html; charset=utf-8'), 'html')
+      assert.equal(mimeTypes.extension('text/html; charset=utf-8 '), 'html')
+      assert.equal(mimeTypes.extension('text/html ; charset=utf-8'), 'html')
     })
   })
 
@@ -169,16 +178,16 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.lookup('.Xml'), 'application/xml')
     })
 
-    it('should return false for unknown extension', function () {
-      assert.strictEqual(mimeTypes.lookup('.bogus'), false)
-      assert.strictEqual(mimeTypes.lookup('bogus'), false)
+    it('should return undefined for unknown extension', function () {
+      assert.strictEqual(mimeTypes.lookup('.bogus'), undefined)
+      assert.strictEqual(mimeTypes.lookup('bogus'), undefined)
     })
 
-    it('should return false for non-strings', function () {
-      assert.strictEqual(mimeTypes.lookup(null), false)
-      assert.strictEqual(mimeTypes.lookup(undefined), false)
-      assert.strictEqual(mimeTypes.lookup(42), false)
-      assert.strictEqual(mimeTypes.lookup({}), false)
+    it('should return undefined for non-strings', function () {
+      assert.strictEqual(mimeTypes.lookup(null), undefined)
+      assert.strictEqual(mimeTypes.lookup(undefined), undefined)
+      assert.strictEqual(mimeTypes.lookup(42), undefined)
+      assert.strictEqual(mimeTypes.lookup({}), undefined)
     })
   })
 
@@ -202,17 +211,17 @@ describe('mimeTypes', function () {
       assert.equal(mimeTypes.lookup('C:\\path\\to\\PAGE.HTML'), 'text/html')
     })
 
-    it('should return false for unknown extension', function () {
-      assert.strictEqual(mimeTypes.lookup('/path/to/file.bogus'), false)
+    it('should return undefined for unknown extension', function () {
+      assert.strictEqual(mimeTypes.lookup('/path/to/file.bogus'), undefined)
     })
 
-    it('should return false for path without extension', function () {
-      assert.strictEqual(mimeTypes.lookup('/path/to/json'), false)
+    it('should return undefined for path without extension', function () {
+      assert.strictEqual(mimeTypes.lookup('/path/to/json'), undefined)
     })
 
     describe('path with dotfile', function () {
-      it('should return false when extension-less', function () {
-        assert.strictEqual(mimeTypes.lookup('/path/to/.json'), false)
+      it('should return undefined when extension-less', function () {
+        assert.strictEqual(mimeTypes.lookup('/path/to/.json'), undefined)
       })
 
       it('should return mime type when there is extension', function () {
