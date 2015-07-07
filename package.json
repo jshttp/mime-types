@@ -27,6 +27,7 @@
   "files": [
     "HISTORY.md",
     "LICENSE",
+    "src",
     "index.js"
   ],
   "engines": {
