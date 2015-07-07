@@ -14,21 +14,30 @@
   ],
   "repository": "jshttp/mime-types",
   "dependencies": {
-    "mime-db": "~1.14.0"
+    "media-typer": "^0.3.0",
+    "mime-db": "~1.14.0",
+    "minimatch": "^2.0.8",
+    "util-ex": "^0.3.4"
   },
   "devDependencies": {
+    "coffee-script": "^1.9.3",
     "istanbul": "0.3.16",
     "mocha": "~1.21.5"
   },
   "files": [
     "HISTORY.md",
     "LICENSE",
+    "lib",
+    "src",
     "index.js"
   ],
   "engines": {
     "node": ">= 0.6"
   },
   "scripts": {
+    "prepublish": "./node_modules/.bin/coffee -o lib -c src/*.coffee",
+    "pretest": "./node_modules/.bin/coffee -o lib -c src/*.coffee",
+    "install": "./node_modules/.bin/coffee -o lib -c src/*.coffee",
     "test": "mocha --reporter spec test/test.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/test.js",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/test.js"
