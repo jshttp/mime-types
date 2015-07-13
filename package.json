@@ -17,7 +17,7 @@
     "mime-db": "~1.14.0"
   },
   "devDependencies": {
-    "istanbul": "0.3.16",
+    "istanbul": "0.3.17",
     "mocha": "~1.21.5"
   },
   "files": [
