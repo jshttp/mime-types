@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.9 / 2016-01-06
+==================
 
   * deps: mime-db@~1.21.0
     - Add new mime types
