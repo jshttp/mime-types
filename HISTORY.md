@@ -1,3 +1,11 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.22.0
+    - Add new mime types
+    - Fix extension of `application/dash+xml`
+    - Update primary extension for `audio/mp4`
+
 2.1.9 / 2016-01-06
 ==================
 
