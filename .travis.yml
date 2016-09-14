@@ -12,10 +12,16 @@ node_js:
   - "5.12"
   - "6.6"
 sudo: false
+cache:
+  directories:
+    - node_modules
 before_install:
   # Setup Node.js version-specific dependencies
   - "test $TRAVIS_NODE_VERSION != '0.6' || npm rm --save-dev istanbul"
   - "test $TRAVIS_NODE_VERSION != '0.8' || npm rm --save-dev istanbul"
+  # Update Node.js modules
+  - "test ! -d node_modules || npm prune"
+  - "test ! -d node_modules || npm rebuild"
 script:
   # Run test script, depending on istanbul install
   - "test ! -z $(npm -ps ls istanbul) || npm test"
