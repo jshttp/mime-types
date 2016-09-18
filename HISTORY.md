@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.24.0
+    - Add new mime types
+    - Add `audio/mp3`
+
 2.1.11 / 2016-05-01
 ===================
 
