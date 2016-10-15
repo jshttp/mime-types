@@ -72,12 +72,12 @@ mime.extension('application/octet-stream') // 'bin'
 ```
 
 
-### mime.allExtension(type)
+### mime.allExtensions(type)
 
 Get all the extensions for a content-type.
 
 ```js
-mime.allExtension('audio/mpeg') // ["mpga", "mp2", "mp2a", "mp3", "m2a", "m3a"]
+mime.allExtensions('audio/mpeg') // ["mpga", "mp2", "mp2a", "mp3", "m2a", "m3a"]
 ```
 
 ### mime.charset(type)
