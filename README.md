@@ -71,6 +71,15 @@ Get the default extension for a content-type.
 mime.extension('application/octet-stream') // 'bin'
 ```
 
+
+### mime.allExtension(type)
+
+Get all the extensions for a content-type.
+
+```js
+mime.extension('audio/mpeg') // ["mpga", "mp2", "mp2a", "mp3", "m2a", "m3a"]
+```
+
 ### mime.charset(type)
 
 Lookup the implied default charset of a content-type.
