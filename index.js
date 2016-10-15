@@ -32,6 +32,7 @@ exports.charset = charset
 exports.charsets = { lookup: charset }
 exports.contentType = contentType
 exports.extension = extension
+exports.allExtensions = allExtensions
 exports.extensions = Object.create(null)
 exports.lookup = lookup
 exports.types = Object.create(null)
@@ -105,22 +106,37 @@ function contentType (str) {
  */
 
 function extension (type) {
+  var extensions = allExtensions(type);
+
+  return extensions ? extensions[0] : extensions;
+}
+
+/**
+ * Get all the extensions for a MIME type.
+ *
+ * @param {string} type
+ * @return {boolean|Array}
+ */
+
+function allExtensions (type) {
   if (!type || typeof type !== 'string') {
-    return false
+    return false;
   }
 
   // TODO: use media-typer
-  var match = extractTypeRegExp.exec(type)
+  var match = extractTypeRegExp.exec(type);
 
   // get extensions
-  var exts = match && exports.extensions[match[1].toLowerCase()]
+  var exts = match && exports.extensions[match[1].toLowerCase()];
 
   if (!exts || !exts.length) {
-    return false
+    return false;
   }
 
-  return exts[0]
+  return exts;
 }
+
+
 
 /**
  * Lookup the MIME type for a file path/extension.
