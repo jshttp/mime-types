@@ -106,9 +106,9 @@ function contentType (str) {
  */
 
 function extension (type) {
-  var extensions = allExtensions(type);
+  var extensions = allExtensions(type)
 
-  return extensions ? extensions[0] : extensions;
+  return extensions ? extensions[0] : extensions
 }
 
 /**
@@ -120,23 +120,21 @@ function extension (type) {
 
 function allExtensions (type) {
   if (!type || typeof type !== 'string') {
-    return false;
+    return false
   }
 
   // TODO: use media-typer
-  var match = extractTypeRegExp.exec(type);
+  var match = extractTypeRegExp.exec(type)
 
   // get extensions
-  var exts = match && exports.extensions[match[1].toLowerCase()];
+  var exts = match && exports.extensions[match[1].toLowerCase()]
 
   if (!exts || !exts.length) {
-    return false;
+    return false
   }
 
-  return exts;
+  return exts
 }
-
-
 
 /**
  * Lookup the MIME type for a file path/extension.
