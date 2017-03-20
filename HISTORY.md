@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.27.0
+    - Add new mime types
+    - Add `image/apng`
+
 2.1.14 / 2017-01-14
 ===================
 
