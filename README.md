@@ -31,7 +31,7 @@ $ npm install mime-types
 
 ## Adding Types
 
-All mime types are based on [mime-db](hhttps://www.npmjs.com/package/mime-db),
+All mime types are based on [mime-db](https://www.npmjs.com/package/mime-db),
 so open a PR there if you'd like to add mime types.
 
 ## API
