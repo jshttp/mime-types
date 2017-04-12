@@ -186,3 +186,21 @@ function populateMaps (extensions, types) {
     }
   })
 }
+
+exports.glob = function (pattern) {
+  if (!pattern || typeof pattern !== "string") return false
+  if (pattern == '*/*')
+    return ["application/octet-stream"]
+
+  var slashIdx = pattern.indexOf("/")
+  if (slashIdx == -1 || pattern.slice(slashIdx + 1) !== "*")
+    return [pattern]
+
+  var prefix = pattern.slice(0,slashIdx+1);
+  var result = []
+  Object.keys(db).forEach(function (name) {
+    if (name.slice(0, slashIdx+1) === prefix)
+      result.push(name)
+  })
+  return result
+}
