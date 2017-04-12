@@ -1,0 +1,23 @@
+{
+  "name": "mime-types",
+  "version": "2.2.1",
+  "description": "Mime types",
+  "keywords": [
+    "mime-type"
+  ],
+  "main": [
+    "dist/mime-types.js",
+    "dist/mime-types.min.js"
+  ],
+  "homepage": "https://github.com/jshttp/mime-types",
+  "license": "MIT",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "/*",
+    "!dist/*"
+  ]
+}

@@ -36,6 +36,10 @@
     "lint": "eslint .",
     "test": "mocha --reporter spec test/test.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/test.js",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/test.js"
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/test.js",
+    "browserify": "./node_modules/browserify/bin/cmd.js --dg false index.js > dist/mime-types.js",
+    "uglify": "./node_modules/uglifyjs/bin/uglifyjs dist/mime-types.js > dist/mime-types.min.js",
+    "install-dev": "npm install browserify@10.2.4 && npm install uglifyjs@2.4.10",
+    "build": "npm run install-dev && npm run browserify && npm run uglify"
   }
 }
