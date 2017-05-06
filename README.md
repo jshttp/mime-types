@@ -56,6 +56,21 @@ mime.lookup('folder/.htaccess') // false
 mime.lookup('cats') // false
 ```
 
+### mime.lookupAll(path)
+
+Find all MIME type associated with a file.
+
+```js
+mime.lookupAll('json')             // ['application/json']
+mime.lookupAll('.rtf')             // ['application/rtf', 'text/rtf']
+mime.lookupAll('file.bmp')         // ['image/bmp', 'image/x-ms-bmp']
+mime.lookupAll('folder/file.js')   // ['application/javascript']
+mime.lookupAll('folder/.htaccess') // []
+
+mime.lookupAll('cats')             // []
+mime.lookupAll(42)                 // false
+```
+
 ### mime.contentType(type)
 
 Create a full content-type header given a content-type or extension.

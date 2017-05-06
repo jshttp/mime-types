@@ -22,7 +22,8 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "2.1.1",
     "istanbul": "0.4.5",
-    "mocha": "1.21.5"
+    "mocha": "1.21.5",
+    "nodemon": "^1.11.0"
   },
   "files": [
     "HISTORY.md",
@@ -35,6 +36,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha --reporter spec test/test.js",
+    "test:watch": "nodemon --exec npm test",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/test.js",
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/test.js"
   }
