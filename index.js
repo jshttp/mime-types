@@ -132,7 +132,7 @@ function extension (type) {
  * If the path is not a string or a proper extension isn't found,
  *   false is returned.
  * The path is case insensitive (so hello.html and HELLO.HTML are equal).
- * 
+ *
  * @param {string} path
  * @return {boolean|string} the file extension if available. false otherwise.
  */
@@ -187,7 +187,6 @@ function lookupAll (path) {
 
   return typeSets[extension] || []
 }
-
 
 /**
  * Populate the extensions and types maps.
