@@ -34,6 +34,8 @@ $ npm install mime-types
 All mime types are based on [mime-db](https://www.npmjs.com/package/mime-db),
 so open a PR there if you'd like to add mime types.
 
+Optional, you can add custom MIME types with the `add(type, extensions)` method on our API.
+
 ## API
 
 ```js
@@ -74,6 +76,16 @@ Get the default extension for a content-type.
 
 ```js
 mime.extension('application/octet-stream') // 'bin'
+```
+
+### mime.add(type, extension)
+
+Adding a new MIME type to the database
+
+```js
+mime.add('text/helloworld', [ 'hw', 'hello', 'world' ])
+
+mime.add('text/valve-data-file', [ 'vdf' ])
 ```
 
 ### mime.charset(type)
