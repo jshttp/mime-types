@@ -1,3 +1,11 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.28.0
+    - Add new upstream MIME types
+    - Add extension `.gz` to `application/gzip`
+    - Update extensions `.md` and `.markdown` to be `text/markdown`
+
 2.1.15 / 2017-03-23
 ===================
 
