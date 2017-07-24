@@ -1,9 +1,11 @@
 unreleased
 ==========
 
-  * deps: mime-db@~1.28.0
-    - Add new upstream MIME types
+  * deps: mime-db@~1.29.0
+    - Add `application/fido.trusted-apps+json`
+    - Add extension `.wadl` to `application/vnd.sun.wadl+xml`
     - Add extension `.gz` to `application/gzip`
+    - Add new upstream MIME types
     - Update extensions `.md` and `.markdown` to be `text/markdown`
 
 2.1.15 / 2017-03-23
