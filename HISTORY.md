@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.16 / 2017-07-24
+===================
 
   * deps: mime-db@~1.29.0
     - Add `application/fido.trusted-apps+json`
