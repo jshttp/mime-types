@@ -2,6 +2,12 @@
 var assert = require('assert')
 var mimeTypes = require('..')
 
+var allMatch = function (actual, expected) {
+  expected.forEach(function (expectedType) {
+    assert.ok(actual.indexOf(expectedType) > -1)
+  })
+}
+
 describe('mimeTypes', function () {
   describe('.charset(type)', function () {
     it('should return "UTF-8" for "application/json"', function () {
@@ -221,6 +227,79 @@ describe('mimeTypes', function () {
 
       it('should return mime type when there is extension, but no path', function () {
         assert.strictEqual(mimeTypes.lookup('.config.json'), 'application/json')
+      })
+    })
+  })
+
+  describe('.lookupAll(extension)', function () {
+    it('should return a list with multiple mime types when many exist', function () {
+      allMatch(mimeTypes.lookupAll('.rtf'), ['application/rtf', 'text/rtf'])
+    })
+
+    it('should return a list with one mime type when only one exists', function () {
+      allMatch(mimeTypes.lookupAll('.html'), ['text/html'])
+    })
+
+    it('should work without a leading dot', function () {
+      allMatch(mimeTypes.lookupAll('rtf'), ['application/rtf', 'text/rtf'])
+    })
+
+    it('should be case-insensitive', function () {
+      allMatch(mimeTypes.lookupAll('RtF'), ['application/rtf', 'text/rtf'])
+      allMatch(mimeTypes.lookupAll('.HTML'), ['text/html'])
+    })
+
+    it('should return an empty list for an unknown extension', function () {
+      allMatch(mimeTypes.lookupAll('bogus'), [])
+    })
+
+    it('should return false for non-strings', function () {
+      assert.strictEqual(mimeTypes.lookupAll(null), false)
+      assert.strictEqual(mimeTypes.lookupAll(undefined), false)
+      assert.strictEqual(mimeTypes.lookupAll(3.141592), false)
+      assert.strictEqual(mimeTypes.lookupAll({}), false)
+    })
+  })
+
+  describe('.lookupAll(path)', function () {
+    it('should return mime type for file name', function () {
+      allMatch(mimeTypes.lookupAll('page.html'), ['text/html'])
+    })
+
+    it('should return mime type for relative path', function () {
+      allMatch(mimeTypes.lookupAll('path/to/page.html'), ['text/html'])
+      allMatch(mimeTypes.lookupAll('path\\to\\doc.rtf'), ['application/rtf', 'text/rtf'])
+    })
+
+    it('should return mime type for absolute path', function () {
+      allMatch(mimeTypes.lookupAll('/path/to/page.html'), ['text/html'])
+      allMatch(mimeTypes.lookupAll('C:\\path\\to\\doc.rtf'), ['application/rtf', 'text/rtf'])
+    })
+
+    it('should be case insensitive', function () {
+      allMatch(mimeTypes.lookupAll('/path/to/PAGE.HTML'), ['text/html'])
+      allMatch(mimeTypes.lookupAll('C:\\path\\to\\DOC.RTF'), ['application/rtf', 'text/rtf'])
+    })
+
+    it('should return an empty list for unknown extension', function () {
+      allMatch(mimeTypes.lookupAll('/path/to/file.bogus'), [])
+    })
+
+    it('should return false for path without extension', function () {
+      assert.strictEqual(mimeTypes.lookupAll('/path/to/json'), false)
+    })
+
+    describe('lookupAll() - path with dotfile', function () {
+      it('should return false when extension-less', function () {
+        assert.strictEqual(mimeTypes.lookupAll('/path/to/.json'), false)
+      })
+
+      it('should return all mime types when there is extension', function () {
+        allMatch(mimeTypes.lookupAll('/path/to/.config.json'), ['application/json'])
+      })
+
+      it('should return all mime types when there is extension, but no path', function () {
+        allMatch(mimeTypes.lookupAll('.config.json'), ['application/json'])
       })
     })
   })

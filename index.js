@@ -22,6 +22,7 @@ var extname = require('path').extname
 
 var extractTypeRegExp = /^\s*([^;\s]*)(?:;|\s|$)/
 var textTypeRegExp = /^text\//i
+var typeSets = {}
 
 /**
  * Module exports.
@@ -34,10 +35,14 @@ exports.contentType = contentType
 exports.extension = extension
 exports.extensions = Object.create(null)
 exports.lookup = lookup
+exports.lookupAll = lookupAll
 exports.types = Object.create(null)
 
 // Populate the extensions/types maps
 populateMaps(exports.extensions, exports.types)
+
+// Populate the extensions->[types] set
+populateTypeSets(typeSets)
 
 /**
  * Get the default charset for a MIME type.
@@ -123,13 +128,16 @@ function extension (type) {
 }
 
 /**
- * Lookup the MIME type for a file path/extension.
+ * Obtain the extension of a filename or filepath.
+ * If the path is not a string or a proper extension isn't found,
+ *   false is returned.
+ * The path is case insensitive (so hello.html and HELLO.HTML are equal).
  *
  * @param {string} path
- * @return {boolean|string}
+ * @return {boolean|string} the file extension if available. false otherwise.
  */
 
-function lookup (path) {
+function extractExtension (path) {
   if (!path || typeof path !== 'string') {
     return false
   }
@@ -143,7 +151,41 @@ function lookup (path) {
     return false
   }
 
+  return extension
+}
+
+/**
+ * Lookup the MIME type for a file path/extension.
+ *
+ * @param {string} path
+ * @return {boolean|string}
+ */
+
+function lookup (path) {
+  var extension = extractExtension(path)
+
+  if (!extension) {
+    return false
+  }
+
   return exports.types[extension] || false
+}
+
+/**
+ * Find all MIME types that are associated with a file extensions.
+ *
+ * @param {string} path or file extension
+ * @return {boolean|array<string>}
+ */
+
+function lookupAll (path) {
+  var extension = extractExtension(path)
+
+  if (!extension) {
+    return false
+  }
+
+  return typeSets[extension] || []
 }
 
 /**
@@ -184,5 +226,31 @@ function populateMaps (extensions, types) {
       // set the extension -> mime
       types[extension] = type
     }
+  })
+}
+
+/**
+ * Populate the set where extension->[types]
+ * An example is .rtf -> ['application/rtf', 'text/rtf']
+ *
+ * @private
+ * @param {object<string, array<string>>} the map to fill in
+ */
+
+function populateTypeSets (typeSets) {
+  Object.keys(db).forEach(function (type) {
+    var exts = db[type].extensions
+
+    if (!exts || !exts.length) {
+      return
+    }
+
+    exts.forEach(function (ext) {
+      if (typeSets[ext]) {
+        typeSets[ext].push(type)
+      } else {
+        typeSets[ext] = [type]
+      }
+    })
   })
 }
