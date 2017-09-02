@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.17 / 2017-09-01
+===================
 
   * deps: mime-db@~1.30.0
     - Add `application/vnd.ms-outlook`
