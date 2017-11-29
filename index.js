@@ -13,6 +13,7 @@
  */
 
 var db = require('mime-db')
+var mimeScore = require('mime-score')
 var extname = require('path').extname
 
 /**
@@ -152,9 +153,6 @@ function lookup (path) {
  */
 
 function populateMaps (extensions, types) {
-  // source preference (least -> most)
-  var preference = ['nginx', 'apache', undefined, 'iana']
-
   Object.keys(db).forEach(function forEachMimeType (type) {
     var mime = db[type]
     var exts = mime.extensions
@@ -171,11 +169,10 @@ function populateMaps (extensions, types) {
       var extension = exts[i]
 
       if (types[extension]) {
-        var from = preference.indexOf(db[types[extension]].source)
-        var to = preference.indexOf(mime.source)
+        var from = mimeScore(types[extension], db[types[extension]].source)
+        var to = mimeScore(type, mime.source)
 
-        if (types[extension] !== 'application/octet-stream' &&
-          (from > to || (from === to && types[extension].substr(0, 12) === 'application/'))) {
+        if (from > to) {
           // skip the remapping
           continue
         }
