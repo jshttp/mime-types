@@ -12,32 +12,16 @@
  * @private
  */
 
-var db = require('mime-db')
-var extname = require('path').extname
+const db = require('mime-db')
+const extname = require('path').extname
 
 /**
  * Module variables.
  * @private
  */
 
-var EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/
-var TEXT_TYPE_REGEXP = /^text\//i
-
-/**
- * Module exports.
- * @public
- */
-
-exports.charset = charset
-exports.charsets = { lookup: charset }
-exports.contentType = contentType
-exports.extension = extension
-exports.extensions = Object.create(null)
-exports.lookup = lookup
-exports.types = Object.create(null)
-
-// Populate the extensions/types maps
-populateMaps(exports.extensions, exports.types)
+const EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/
+const TEXT_TYPE_REGEXP = /^text\//i
 
 /**
  * Get the default charset for a MIME type.
@@ -46,14 +30,14 @@ populateMaps(exports.extensions, exports.types)
  * @return {boolean|string}
  */
 
-function charset (type) {
+const charset = type => {
   if (!type || typeof type !== 'string') {
     return false
   }
 
   // TODO: use media-typer
-  var match = EXTRACT_TYPE_REGEXP.exec(type)
-  var mime = match && db[match[1].toLowerCase()]
+  const match = EXTRACT_TYPE_REGEXP.exec(type)
+  const mime = match && db[match[1].toLowerCase()]
 
   if (mime && mime.charset) {
     return mime.charset
@@ -74,13 +58,13 @@ function charset (type) {
  * @return {boolean|string}
  */
 
-function contentType (str) {
+const contentType = str => {
   // TODO: should this even be in this module?
   if (!str || typeof str !== 'string') {
     return false
   }
 
-  var mime = str.indexOf('/') === -1
+  let mime = str.indexOf('/') === -1
     ? exports.lookup(str)
     : str
 
@@ -90,7 +74,7 @@ function contentType (str) {
 
   // TODO: use content-type or other module
   if (mime.indexOf('charset') === -1) {
-    var charset = exports.charset(mime)
+    const charset = exports.charset(mime)
     if (charset) mime += '; charset=' + charset.toLowerCase()
   }
 
@@ -104,16 +88,16 @@ function contentType (str) {
  * @return {boolean|string}
  */
 
-function extension (type) {
+const extension = type => {
   if (!type || typeof type !== 'string') {
     return false
   }
 
   // TODO: use media-typer
-  var match = EXTRACT_TYPE_REGEXP.exec(type)
+  const match = EXTRACT_TYPE_REGEXP.exec(type)
 
   // get extensions
-  var exts = match && exports.extensions[match[1].toLowerCase()]
+  const exts = match && exports.extensions[match[1].toLowerCase()]
 
   if (!exts || !exts.length) {
     return false
@@ -129,13 +113,13 @@ function extension (type) {
  * @return {boolean|string}
  */
 
-function lookup (path) {
+const lookup = path => {
   if (!path || typeof path !== 'string') {
     return false
   }
 
   // get the extension ("ext" or ".ext" or full path)
-  var extension = extname('x.' + path)
+  const extension = extname('x.' + path)
     .toLowerCase()
     .substr(1)
 
@@ -151,13 +135,13 @@ function lookup (path) {
  * @private
  */
 
-function populateMaps (extensions, types) {
+const populateMaps = (extensions, types) => {
   // source preference (least -> most)
-  var preference = ['nginx', 'apache', undefined, 'iana']
+  const preference = ['nginx', 'apache', undefined, 'iana']
 
   Object.keys(db).forEach(function forEachMimeType (type) {
-    var mime = db[type]
-    var exts = mime.extensions
+    const mime = db[type]
+    const exts = mime.extensions
 
     if (!exts || !exts.length) {
       return
@@ -167,12 +151,12 @@ function populateMaps (extensions, types) {
     extensions[type] = exts
 
     // extension -> mime
-    for (var i = 0; i < exts.length; i++) {
-      var extension = exts[i]
+    for (let i = 0; i < exts.length; i++) {
+      const extension = exts[i]
 
       if (types[extension]) {
-        var from = preference.indexOf(db[types[extension]].source)
-        var to = preference.indexOf(mime.source)
+        const from = preference.indexOf(db[types[extension]].source)
+        const to = preference.indexOf(mime.source)
 
         if (types[extension] !== 'application/octet-stream' &&
           (from > to || (from === to && types[extension].substr(0, 12) === 'application/'))) {
@@ -186,3 +170,19 @@ function populateMaps (extensions, types) {
     }
   })
 }
+
+/**
+ * Module exports.
+ * @public
+ */
+
+exports.charset = charset
+exports.charsets = { lookup: charset }
+exports.contentType = contentType
+exports.extension = extension
+exports.extensions = Object.create(null)
+exports.lookup = lookup
+exports.types = Object.create(null)
+
+// Populate the extensions/types maps
+populateMaps(exports.extensions, exports.types)

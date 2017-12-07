@@ -12,8 +12,8 @@ Similar to [the `mime@1.x` module](https://www.npmjs.com/package/mime), except:
 
 - __No fallbacks.__ Instead of naively returning the first available type,
   `mime-types` simply returns `false`, so do
-  `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
-- No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`.
+  `const type = mime.lookup('unrecognized') || 'application/octet-stream'`.
+- No `new Mime()` business, so you could do `const lookup = require('mime-types').lookup`.
 - No `.define()` functionality
 - Bug fixes for `.lookup(path)`
 
@@ -37,7 +37,7 @@ so open a PR there if you'd like to add mime types.
 ## API
 
 ```js
-var mime = require('mime-types')
+const mime = require('mime-types')
 ```
 
 All functions return `false` if input is invalid or not found.
@@ -84,7 +84,7 @@ Lookup the implied default charset of a content-type.
 mime.charset('text/markdown') // 'UTF-8'
 ```
 
-### var type = mime.types[extension]
+### const type = mime.types[extension]
 
 A map of content-types by extension.
 
