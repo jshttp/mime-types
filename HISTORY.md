@@ -1,11 +1,12 @@
 unreleased
 ==========
 
-  * deps: mime-db@~1.32.0
+  * deps: mime-db@~1.33.0
     - Add `application/raml+yaml` with extension `.raml`
     - Add `application/wasm` with extension `.wasm`
     - Add `text/shex` with extension `.shex`
     - Add extensions for JPEG-2000 images
+    - Add extensions from IANA for `message/*` types
     - Add new upstream MIME types
     - Update font MIME types
     - Update `text/hjson` to registered `application/hjson`
