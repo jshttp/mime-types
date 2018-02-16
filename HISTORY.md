@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.18 / 2018-02-16
+===================
 
   * deps: mime-db@~1.33.0
     - Add `application/raml+yaml` with extension `.raml`
