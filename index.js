@@ -13,7 +13,6 @@
  */
 
 var db = require('mime-db')
-var extname = require('path').extname
 
 /**
  * Module variables.
@@ -123,6 +122,49 @@ function extension (type) {
 }
 
 /**
+ * Get the extension of a path
+ *
+ * @param {string} path
+ * @return {string}
+ */
+
+function getExtension (path) {
+  // Split by double foreslash or backslash to seperate Path from File
+  var pathArray = path.split(/[\\/]/)
+  // if split return just 1 item -> no path
+  if (pathArray.length === 1) {
+    // split path by dot to get extension
+    return path.split('.').pop().toLowerCase()
+  } else {
+    // get last part of path which is the filename
+    var file = pathArray.pop()
+    // if filename starts with a dot -> dotfile
+    if (file.substr(0, 1) === '.') {
+      // split dotfile by dot
+      var fileArray = file.split('.')
+      // if length is greater than 2 it has more than 1 dot -> dotfile with extension
+      if (fileArray.length > 2) {
+        // get extension of dotfile
+        return fileArray.pop().toLowerCase()
+      } else {
+        // if dotfile has no extension
+        return null
+      }
+    } else {
+      // split filename by dot to get extension
+      var fileNameArray = file.split('.')
+      // if just 1 item -> no extension
+      if (fileNameArray.length === 1) {
+        return null
+      } else {
+        // get extension of filename
+        return fileNameArray.pop().toLowerCase()
+      }
+    }
+  }
+}
+
+/**
  * Lookup the MIME type for a file path/extension.
  *
  * @param {string} path
@@ -135,9 +177,7 @@ function lookup (path) {
   }
 
   // get the extension ("ext" or ".ext" or full path)
-  var extension = extname('x.' + path)
-    .toLowerCase()
-    .substr(1)
+  var extension = getExtension(path)
 
   if (!extension) {
     return false
