@@ -129,8 +129,8 @@ function extension (type) {
  */
 
 function getExtension (path) {
-  // Split by Slash to seperate Path from File
-  var pathArray = path.split('/')
+  // Split by double foreslash or backslash to seperate Path from File
+  var pathArray = path.split(/[\\/]/)
   // if split return just 1 item -> no path
   if (pathArray.length === 1) {
     // split path by dot to get extension
