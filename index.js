@@ -13,7 +13,6 @@
  */
 
 var db = require('mime-db')
-var extname = require('path').extname
 
 /**
  * Module variables.
@@ -135,15 +134,55 @@ function lookup (path) {
   }
 
   // get the extension ("ext" or ".ext" or full path)
-  var extension = extname('x.' + path)
-    .toLowerCase()
-    .substr(1)
+  var extension = getExtension(path);
 
   if (!extension) {
     return false
   }
 
   return exports.types[extension] || false
+}
+
+/**
+ * Get the extension of a path
+ * @private
+ */
+
+function getExtension(path){
+
+  // Split by Slash to seperate Path from File
+  const pathArray = path.split("/");
+  // if split return just 1 item -> no path
+  if (pathArray.length === 1) {
+    // split path by dot to get extension
+    return path.split('.').pop().toLowerCase();
+  } else {
+    // get last part of path which is the filename
+    const file = pathArray.pop();
+    // if filename starts with a dot -> dotfile
+    if (file.startsWith('.')) {
+      // split dotfile by dot
+      const fileArray = file.split('.');
+      // if length is greater than 2 it has more than 1 dot -> dotfile with extension
+      if(fileArray.length > 2){
+        // get extension of dotfile
+        return fileArray.pop().toLowerCase();
+      } else { 
+        // if dotfile has no extension
+        return null;
+      }
+    } else {
+      // split filename by dot to get extension
+      const fileArray = file.split('.');
+      // if just 1 item -> no extension
+      if(fileArray.length === 1){
+        return null;
+      } else {
+        // get extension of filename
+        return fileArray.pop().toLowerCase();
+      }
+    }
+  }
 }
 
 /**
