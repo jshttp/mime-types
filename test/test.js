@@ -1,6 +1,13 @@
 
-var assert = require('assert')
-var mimeTypes = require('..')
+var mimeTypes
+
+// check if browser or node enviroment
+if (typeof window !== 'undefined') {
+  mimeTypes = window['mime-types']
+} else {
+  var assert = require('assert')
+  mimeTypes = require('..')
+}
 
 describe('mimeTypes', function () {
   describe('.charset(type)', function () {
