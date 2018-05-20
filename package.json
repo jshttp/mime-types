@@ -17,7 +17,7 @@
     "mime-db": "~1.33.0"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
+    "chai": "4.1.2",
     "eslint": "3.19.0",
     "eslint-config-standard": "10.2.1",
     "eslint-plugin-import": "2.8.0",
@@ -25,13 +25,14 @@
     "eslint-plugin-promise": "3.6.0",
     "eslint-plugin-standard": "3.0.1",
     "istanbul": "0.4.5",
-    "karma": "^2.0.2",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-mocha": "^1.3.0",
+    "karma": "2.0.2",
+    "karma-chai": "0.1.0",
+    "karma-chrome-launcher": "2.2.0",
+    "karma-firefox-launcher": "1.1.0",
+    "karma-mocha": "1.3.0",
     "karma-spec-reporter": "0.0.32",
-    "mocha": "^1.21.5",
-    "parcel": "^1.8.1"
+    "mocha": "1.21.5",
+    "parcel": "1.8.1"
   },
   "files": [
     "HISTORY.md",
@@ -45,8 +46,8 @@
   "scripts": {
     "build-browser": "parcel build index.js --out-dir browser/ --global mime-types --no-source-maps",
     "lint": "eslint .",
-    "pretest": "npm run build-browser",
-    "test": "npm run test-node && npm run test-browser",
+    "test": "npm run test-node",
+    "pretest-browser": "npm run build-browser",
     "test-browser": "node_modules/karma/bin/karma start",
     "test-node": "mocha --reporter spec test/test.js",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/test.js",

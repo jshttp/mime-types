@@ -25,14 +25,21 @@ before_install:
   # Setup Node.js version-specific dependencies
   - "test $TRAVIS_NODE_VERSION != '0.6' || npm rm --save-dev istanbul"
   - "test $TRAVIS_NODE_VERSION != '0.8' || npm rm --save-dev istanbul"
+  # ddd browser testing just in node version 6
+  - "test $TRAVIS_NODE_VERSION == '6.13' || npm rm --save-dev chai karma karma-chai karma-chrome-launcher karma-firefox-launcher karma-mocha karma-spec-reporter parcel"
   - "test $(echo $TRAVIS_NODE_VERSION | cut -d. -f1) -ge 4 || npm rm --save-dev $(grep -E '\"eslint\\S*\"' package.json | cut -d'\"' -f2)"
   # Update Node.js modules
   - "test ! -d node_modules || npm prune"
   - "test ! -d node_modules || npm rebuild"
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 script:
   # Run test script, depending on istanbul install
   - "test ! -z $(npm -ps ls istanbul) || npm test"
   - "test   -z $(npm -ps ls istanbul) || npm run-script test-travis"
+  # test in browser if karma available
+  - "test   -z $(npm -ps ls karma   ) || npm run-script test-browser"
   - "test   -z $(npm -ps ls eslint  ) || npm run-script lint"
 after_script:
   - "test -e ./coverage/lcov.info && npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
