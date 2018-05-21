@@ -39,7 +39,8 @@ script:
   - "test ! -z $(npm -ps ls istanbul) || npm test"
   - "test   -z $(npm -ps ls istanbul) || npm run-script test-travis"
   # test in browser if karma available
-  - "test   -z $(npm -ps ls karma   ) || npm run-script test-browser"
+  - "test $TRAVIS_NODE_VERSION != '6.13' || npm run-script test-browser"
   - "test   -z $(npm -ps ls eslint  ) || npm run-script lint"
 after_script:
   - "test -e ./coverage/lcov.info && npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
+  
