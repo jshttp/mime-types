@@ -25,8 +25,8 @@ before_install:
   # Setup Node.js version-specific dependencies
   - "test $TRAVIS_NODE_VERSION != '0.6' || npm rm --save-dev istanbul"
   - "test $TRAVIS_NODE_VERSION != '0.8' || npm rm --save-dev istanbul"
-  # ddd browser testing just in node version 6
-  - "test $TRAVIS_NODE_VERSION == '6.13' || npm rm --save-dev chai karma karma-chai karma-chrome-launcher karma-firefox-launcher karma-mocha karma-spec-reporter parcel"
+  # add modules for browser testing just in node version 6
+  - "test $TRAVIS_NODE_VERSION == '6.13' || npm rm --save-dev browserify chai karma karma-chai karma-chrome-launcher karma-firefox-launcher karma-mocha karma-spec-reporter"
   - "test $(echo $TRAVIS_NODE_VERSION | cut -d. -f1) -ge 4 || npm rm --save-dev $(grep -E '\"eslint\\S*\"' package.json | cut -d'\"' -f2)"
   # Update Node.js modules
   - "test ! -d node_modules || npm prune"

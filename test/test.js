@@ -3,7 +3,7 @@ var mimeTypes
 
 // check if browser or node enviroment
 if (typeof window !== 'undefined') {
-  mimeTypes = window['mime-types']
+  mimeTypes = window['mimeTypes']
 } else {
   var assert = require('assert')
   mimeTypes = require('..')
