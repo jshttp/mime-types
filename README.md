@@ -34,11 +34,32 @@ $ npm install mime-types
 All mime types are based on [mime-db](https://www.npmjs.com/package/mime-db),
 so open a PR there if you'd like to add mime types.
 
-## API
+## Quick Start
+
+### Node.js
 
 ```js
 var mime = require('mime-types')
+mime.lookup("index.html");
 ```
+
+### Browser
+
+```html
+<script src="node_modules/mime-types/browser/index.js"></script>
+<script>
+  mimeType.lookup("index.html");
+<script>
+```
+
+### Angular
+
+```js
+import * as mime from 'mime-types';
+mime.lookup("index.html")
+```
+
+## API
 
 All functions return `false` if input is invalid or not found.
 
