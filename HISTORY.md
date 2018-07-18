@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.19 / 2018-07-17
+===================
 
   * deps: mime-db@~1.35.0
     - Add extension `.csl` to `application/vnd.citationstyles.style+xml`
