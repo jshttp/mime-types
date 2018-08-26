@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.20 / 2018-08-26
+===================
 
   * deps: mime-db@~1.36.0
     - Add Apple file extensions from IANA
