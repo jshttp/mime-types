@@ -14,7 +14,7 @@ node_js:
   - "7.10"
   - "8.12"
   - "9.11"
-  - "10.9"
+  - "10.11"
 sudo: false
 dist: percise
 cache:
