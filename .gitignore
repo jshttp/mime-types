@@ -1,8 +1,5 @@
-
-.DS_Store*
-*.log
-*.gz
-
-node_modules
-package-lock.json
+.nyc_output
 coverage
+node_modules
+npm-debug.log
+package-lock.json
