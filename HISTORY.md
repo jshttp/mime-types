@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.21 / 2018-10-19
+===================
 
   * deps: mime-db@~1.37.0
     - Add extensions to HEIC image types
