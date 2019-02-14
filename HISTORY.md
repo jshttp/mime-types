@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.22 / 2019-02-14
+===================
 
   * deps: mime-db@~1.38.0
     - Add extension `.nq` to `application/n-quads`
