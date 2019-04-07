@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@~1.39.0
+    - Add extensions `.siv` and `.sieve` to `application/sieve`
+    - Add new upstream MIME types
+
 2.1.22 / 2019-02-14
 ===================
 
