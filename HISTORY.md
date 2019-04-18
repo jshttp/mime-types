@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.23 / 2019-04-17
+===================
 
   * deps: mime-db@~1.39.0
     - Add extensions `.siv` and `.sieve` to `application/sieve`
