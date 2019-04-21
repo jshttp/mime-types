@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@1.40.0
+    - Add extensions from IANA for `model/*` types
+    - Add `text/mdx` with extension `.mdx`
+
 2.1.23 / 2019-04-17
 ===================
 
