@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.24 / 2019-04-20
+===================
 
   * deps: mime-db@1.40.0
     - Add extensions from IANA for `model/*` types
