@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@1.41.0
+    - Add new upstream MIME types
+    - Add `application/toml` with extension `.toml`
+
 2.1.24 / 2019-04-20
 ===================
 
