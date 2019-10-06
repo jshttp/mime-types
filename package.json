@@ -14,7 +14,7 @@
   ],
   "repository": "jshttp/mime-types",
   "dependencies": {
-    "mime-db": "1.41.0"
+    "mime-db": "1.42.0"
   },
   "devDependencies": {
     "eslint": "6.3.0",
