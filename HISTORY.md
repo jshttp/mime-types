@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.26 / 2020-01-05
+===================
 
   * deps: mime-db@1.43.0
     - Add `application/x-keepass2` with extension `.kdbx`
