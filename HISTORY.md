@@ -1,3 +1,12 @@
+unreleased
+==========
+
+  * deps: mime-db@1.43.0
+    - Add `application/x-keepass2` with extension `.kdbx`
+    - Add extension `.mxmf` to `audio/mobile-xmf`
+    - Add extensions from IANA for `application/*+xml` types
+    - Add new upstream MIME types
+
 2.1.25 / 2019-11-12
 ===================
 
