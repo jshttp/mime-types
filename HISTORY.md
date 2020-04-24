@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.27 / 2020-04-23
+===================
 
   * deps: mime-db@1.44.0
     - Add charsets from IANA
