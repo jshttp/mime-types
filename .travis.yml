@@ -70,11 +70,12 @@ before_install:
     fi
   - |
     # Configure mocha for testing
-    if   node_version_lt '0.8' ; then npm_use_module 'mocha' '1.21.5'
-    elif node_version_lt '0.10'; then npm_use_module 'mocha' '2.5.3'
-    elif node_version_lt '4.0' ; then npm_use_module 'mocha' '3.5.3'
-    elif node_version_lt '6.0' ; then npm_use_module 'mocha' '5.2.0'
-    elif node_version_lt '8.0' ; then npm_use_module 'mocha' '6.2.2'
+    if   node_version_lt '0.8'  ; then npm_use_module 'mocha' '1.21.5'
+    elif node_version_lt '0.10' ; then npm_use_module 'mocha' '2.5.3'
+    elif node_version_lt '4.0'  ; then npm_use_module 'mocha' '3.5.3'
+    elif node_version_lt '6.0'  ; then npm_use_module 'mocha' '5.2.0'
+    elif node_version_lt '8.0'  ; then npm_use_module 'mocha' '6.2.2'
+    elif node_version_lt '10.12'; then npm_use_module 'mocha' '7.2.0'
     fi
   - |
     # Configure nyc for testing
