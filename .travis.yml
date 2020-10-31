@@ -18,6 +18,7 @@ node_js:
   - "12.18"
   - "13.14"
   - "14.8"
+  - "15.0"
 dist: trusty
 env:
   global:
