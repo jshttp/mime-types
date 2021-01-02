@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.28 / 2021-01-01
+===================
 
   * deps: mime-db@1.45.0
     - Add `application/ubjson` with extension `.ubj`
