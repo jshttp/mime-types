@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.30 / 2021-04-02
+===================
 
   * deps: mime-db@1.47.0
     - Add extension `.amr` to `audio/amr`
