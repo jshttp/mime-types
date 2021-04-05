@@ -6,7 +6,7 @@
 [![Build Status][ci-image]][ci-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
 
-The ultimate javascript content-type utility.
+The ultimate JavaScript content-type utility.
 
 Similar to [the `mime@1.x` module](https://www.npmjs.com/package/mime), except:
 
