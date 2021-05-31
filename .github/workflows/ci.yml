@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         name:
@@ -107,13 +107,18 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install Node.js ${{ matrix.node-version }}
-      shell: bash -l {0}
+      shell: bash -eo pipefail -l {0}
       run: |
+        if [[ "${{ matrix.node-version }}" == 0.6* ]]; then
+          sudo apt-get install g++-4.8 gcc-4.8 libssl1.0-dev
+          export CC=/usr/bin/gcc-4.8
+          export CXX=/usr/bin/g++-4.8
+        fi
         nvm install --default ${{ matrix.node-version }}
         if [[ "${{ matrix.node-version }}" == 0.* ]]; then
           npm config set strict-ssl false
         fi
-        dirname "$(npm which)" >> "$GITHUB_PATH"
+        dirname "$(nvm which ${{ matrix.node-version }})" >> "$GITHUB_PATH"
 
     - name: Configure npm
       run: npm config set shrinkwrap false
@@ -147,8 +152,8 @@ jobs:
       run: |
         echo "node@$(node -v)"
         echo "npm@$(npm -v)"
-        npm -s ls
-        npm -s ls --depth=0 | awk -F'[ @]' 'NR>1 && $2 { print "::set-output name=" $2 "::" $3 }'
+        npm -s ls ||:
+        (npm -s ls --depth=0 ||:) | awk -F'[ @]' 'NR>1 && $2 { print "::set-output name=" $2 "::" $3 }'
 
     - name: Run tests
       shell: bash
