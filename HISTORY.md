@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.31 / 2021-06-01
+===================
 
   * deps: mime-db@1.48.0
     - Add extension `.mvt` to `application/vnd.mapbox-vector-tile`
