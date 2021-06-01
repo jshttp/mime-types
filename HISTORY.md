@@ -1,3 +1,11 @@
+unreleased
+==========
+
+  * deps: mime-db@1.48.0
+    - Add extension `.mvt` to `application/vnd.mapbox-vector-tile`
+    - Add new upstream MIME types
+    - Mark `text/yaml` as compressible
+
 2.1.30 / 2021-04-02
 ===================
 
