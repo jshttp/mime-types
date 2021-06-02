@@ -33,6 +33,7 @@ exports.charsets = { lookup: charset }
 exports.contentType = contentType
 exports.extension = extension
 exports.extensions = Object.create(null)
+exports.add = add
 exports.lookup = lookup
 exports.types = Object.create(null)
 
@@ -120,6 +121,38 @@ function extension (type) {
   }
 
   return exts[0]
+}
+
+/**
+ * Add a new MIME type to the database
+ *
+ * @param {string} type
+ * @extensions {String[]} extensions
+ */
+
+function add (type, extensions) {
+  if (!type || typeof type !== 'string') {
+    return false
+  }
+
+  if (!extensions || typeof extensions !== 'object') {
+    return false
+  }
+
+  // set extensions to LowerCase
+  extensions.forEach(function loopExtensions(extension, index) {
+	  extensions[index] = extension.toLowerCase();
+  
+	  // add the new type to the remapped data
+	  exports.types[extensions[index]] = type;
+  });
+  
+  // add the new type to the database
+  db[type] = {
+	 source: 'none',
+	 compressible: false,
+	 extensions: extensions
+  };
 }
 
 /**
