@@ -1,3 +1,10 @@
+unreleased
+==========
+
+  * deps: mime-db@1.49.0
+    - Add extension `.trig` to `application/trig`
+    - Add new upstream MIME types
+
 2.1.31 / 2021-06-01
 ===================
 
