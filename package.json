@@ -1,7 +1,7 @@
 {
   "name": "mime-types",
   "description": "The ultimate javascript content-type utility.",
-  "version": "2.1.31",
+  "version": "2.1.32",
   "contributors": [
     "Douglas Christopher Wilson <doug@somethingdoug.com>",
     "Jeremiah Senkpiel <fishrock123@rocketmail.com> (https://searchbeam.jit.su)",

@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.32 / 2021-07-27
+===================
 
   * deps: mime-db@1.49.0
     - Add extension `.trig` to `application/trig`
