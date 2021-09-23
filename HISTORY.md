@@ -1,3 +1,10 @@
+unreleased
+ ==========
+
+  * deps: mime-db@1.50.0
+    - Add deprecated iWorks mime types and extensions
+    - Add new upstream MIME types
+     
 2.1.32 / 2021-07-27
 ===================
 
