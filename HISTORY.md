@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.33 / 2021-10-01
+===================
 
   * deps: mime-db@1.50.0
     - Add deprecated iWorks mime types and extensions
