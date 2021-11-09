@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.34 / 2021-11-08
+===================
 
   * deps: mime-db@1.51.0
     - Add new upstream MIME types
