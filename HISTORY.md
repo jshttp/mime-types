@@ -18,7 +18,6 @@
   * deps: mime-db@1.48.0
     - Add extension `.mvt` to `application/vnd.mapbox-vector-tile`
     - Add new upstream MIME types
-    - Mark `text/yaml` as compressible
 
 2.1.30 / 2021-04-02
 ===================
@@ -96,7 +95,6 @@
     - Add extension `.nq` to `application/n-quads`
     - Add extension `.nt` to `application/n-triples`
     - Add new upstream MIME types
-    - Mark `text/less` as compressible
 
 2.1.21 / 2018-10-19
 ===================
@@ -349,7 +347,6 @@
 
   * deps: mime-db@~1.1.0
     - Add new mime types
-    - Add additional compressible
     - Update charsets
 
 2.0.1 / 2014-09-07
