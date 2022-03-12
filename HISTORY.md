@@ -1,3 +1,12 @@
+unreleased
+==========
+
+  * deps: mime-db@1.52.0
+    - Add extensions from IANA for more `image/*` types
+    - Add extension `.asc` to `application/pgp-keys`
+    - Add extensions to various XML types
+    - Add new upstream MIME types
+
 2.1.34 / 2021-11-08
 ===================
 
