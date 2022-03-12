@@ -103,7 +103,7 @@ A map of extensions by content-type.
 [MIT](LICENSE)
 
 [ci-image]: https://badgen.net/github/checks/jshttp/mime-types/master?label=ci
-[ci-url]: https://github.com/jshttp/mime-types/actions?query=workflow%3Aci
+[ci-url]: https://github.com/jshttp/mime-types/actions/workflows/ci.yml
 [coveralls-image]: https://badgen.net/coveralls/c/github/jshttp/mime-types/master
 [coveralls-url]: https://coveralls.io/r/jshttp/mime-types?branch=master
 [node-version-image]: https://badgen.net/npm/node/mime-types
