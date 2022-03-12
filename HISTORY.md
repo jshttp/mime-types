@@ -1,5 +1,5 @@
-unreleased
-==========
+2.1.35 / 2022-03-12
+===================
 
   * deps: mime-db@1.52.0
     - Add extensions from IANA for more `image/*` types
