@@ -137,7 +137,7 @@ function lookup (path) {
   // get the extension ("ext" or ".ext" or full path)
   var extension = extname('x.' + path)
     .toLowerCase()
-    .substr(1)
+    .slice(1)
 
   if (!extension) {
     return false
@@ -175,7 +175,7 @@ function populateMaps (extensions, types) {
         var to = preference.indexOf(mime.source)
 
         if (types[extension] !== 'application/octet-stream' &&
-          (from > to || (from === to && types[extension].substr(0, 12) === 'application/'))) {
+          (from > to || (from === to && types[extension].slice(0, 12) === 'application/'))) {
           // skip the remapping
           continue
         }
