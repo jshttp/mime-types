@@ -14,7 +14,7 @@
   ],
   "repository": "jshttp/mime-types",
   "dependencies": {
-    "mime-db": "https://github.com/jshttp/mime-db.git#master"
+    "gb-mime-db": "https://github.com/jshttp/mime-db.git#master"
   },
   "devDependencies": {
     "eslint": "7.32.0",
