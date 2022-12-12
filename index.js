@@ -12,7 +12,7 @@
  * @private
  */
 
-var db = require('mime-db')
+var db = require('gb-mime-db')
 var extname = require('path').extname
 
 /**
