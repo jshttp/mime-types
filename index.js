@@ -71,7 +71,7 @@ function charset (type) {
  * Create a full Content-Type header given a MIME type or extension.
  *
  * @param {string} str
- * @return {boolean|string}
+ * @return {false|string}
  */
 
 function contentType (str) {
@@ -126,7 +126,7 @@ function extension (type) {
  * Lookup the MIME type for a file path/extension.
  *
  * @param {string} path
- * @return {boolean|string}
+ * @return {false |string}
  */
 
 function lookup (path) {
