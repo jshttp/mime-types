@@ -12,6 +12,8 @@
     "mime",
     "types"
   ],
+  "main": "index.js",
+  "types": "index.d.ts",
   "repository": "jshttp/mime-types",
   "dependencies": {
     "mime-db": "1.52.0"

@@ -13,7 +13,23 @@
  */
 
 var db = require('mime-db')
-var extname = require('path').extname
+// Skip the node.js path module
+// var extname = require('path').extname
+
+/**
+ *
+ * @param {string} path
+ * @returns {string}
+ * @private
+ */
+function extname (path) {
+  var index = path.lastIndexOf('.')
+  var isDotFile = index === path.lastIndexOf('/') + 1
+  if (index <= 0 || isDotFile) {
+    return ''
+  }
+  return path.substring(index)
+}
 
 /**
  * Module variables.
