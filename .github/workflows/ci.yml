@@ -10,27 +10,12 @@ jobs:
     strategy:
       matrix:
         name:
-        - io.js 1.x
-        - io.js 2.x
-        - io.js 3.x
         - Node.js 16.x
         - Node.js 17.x
         - Node.js 18.x
         - Node.js 19.x
 
         include:
-        - name: io.js 1.x
-          node-version: "1.8"
-          npm-i: mocha@3.5.3 nyc@10.3.2
-
-        - name: io.js 2.x
-          node-version: "2.5"
-          npm-i: mocha@3.5.3 nyc@10.3.2
-
-        - name: io.js 3.x
-          node-version: "3.3"
-          npm-i: mocha@3.5.3 nyc@10.3.2
-
         - name: Node.js 16.x
           node-version: "16.19"
 
