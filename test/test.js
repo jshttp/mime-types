@@ -1,4 +1,3 @@
-
 var assert = require('assert')
 var mimeTypes = require('..')
 
@@ -220,7 +219,23 @@ describe('mimeTypes', function () {
       })
 
       it('should return mime type when there is extension, but no path', function () {
-        assert.strictEqual(mimeTypes.lookup('.config.json'), 'application/json')
+        assert.strictEqual(
+          mimeTypes.lookup('.config.json'),
+          'application/json'
+        )
+      })
+    })
+
+    describe('extension conflicts', function () {
+      it('should use mime-score', function () {
+        // Test extension conflicts where the lookup has changed as a result of the switch to mime-score
+        assert.strictEqual(mimeTypes.lookup('exe'), 'application/x-msdownload') // was application/x-msdos-program
+        assert.strictEqual(mimeTypes.lookup('prc'), 'application/x-pilot') // was application/x-mobipocket-ebook
+        assert.strictEqual(mimeTypes.lookup('mp3'), 'audio/mp3') // was audio/mpeg
+        assert.strictEqual(mimeTypes.lookup('wav'), 'audio/wav') // was audio/wave
+        assert.strictEqual(mimeTypes.lookup('ra'), 'audio/x-realaudio') // was audio/x-pn-realaudio
+        assert.strictEqual(mimeTypes.lookup('x3db'), 'model/x3d+binary') // was model/x3d+fastinfoset
+        assert.strictEqual(mimeTypes.lookup('jpm'), 'video/jpm') // was image/jpm
       })
     })
   })

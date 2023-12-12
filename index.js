@@ -14,6 +14,7 @@
 
 var db = require('mime-db')
 var extname = require('path').extname
+var mimeScore = require('./mimeScore')
 
 /**
  * Module variables.
@@ -171,11 +172,11 @@ function populateMaps (extensions, types) {
       var extension = exts[i]
 
       if (types[extension]) {
-        var from = preference.indexOf(db[types[extension]].source)
-        var to = preference.indexOf(mime.source)
+        var from = mimeScore(types[extension])
+        var to = mimeScore(type)
 
         if (types[extension] !== 'application/octet-stream' &&
-          (from > to || (from === to && types[extension].slice(0, 12) === 'application/'))) {
+        from > to) {
           // skip the remapping
           continue
         }
