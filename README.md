@@ -1,33 +1,29 @@
 # mime-types
 
-[![NPM Version][npm-version-image]][npm-url]
+<!-- [![NPM Version][npm-version-image]][npm-url]
 [![NPM Downloads][npm-downloads-image]][npm-url]
 [![Node.js Version][node-version-image]][node-version-url]
 [![Build Status][ci-image]][ci-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
+[![Test Coverage][coveralls-image]][coveralls-url] -->
 
 The ultimate javascript content-type utility.
 
-Similar to [the `mime@1.x` module](https://www.npmjs.com/package/mime), except:
+Forked from [mime-types](https://github.com/jshttp/mime-types)
 
-- __No fallbacks.__ Instead of naively returning the first available type,
-  `mime-types` simply returns `false`, so do
-  `var type = mime.lookup('unrecognized') || 'application/octet-stream'`.
-- No `new Mime()` business, so you could do `var lookup = require('mime-types').lookup`.
-- No `.define()` functionality
-- Bug fixes for `.lookup(path)`
+- Written in typescript
+- Created MimeTypes Class
+- Changed function names
 
-Otherwise, the API is compatible with `mime` 1.x.
+  | old         | new                               |
+  | ----------- | --------------------------------- |
+  | lookup      | [getMime](#getmime)               |
+  | contentType | [getContentType](#getcontenttype) |
+  | extension   | [getExtension](#getextension)     |
+  | charset     | [getCharset](#getcharset)         |
 
-## Install
-
-This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/). Installation is done using the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
-
-```sh
-$ npm install mime-types
-```
+- New Function
+  - [getMimes](#getmimes)
+- Exposed Properties
 
 ## Adding Types
 
@@ -36,27 +32,127 @@ so open a PR there if you'd like to add mime types.
 
 ## API
 
+- Installation
+- Getting Started
+  - [CJS](#cjs)
+- Properties
+  - [types](#types)
+  - [typeSets](#typesets)
+  - [extensions](#extensions)
+- Methods
+  - [getMime](#getmime)
+  - [getMimes](#getmimes)
+  - [getContentType](#getcontenttype)
+  - [getExtension](#getextension)
+  - [getCharset](#getcharset)
+
+## Getting Started
+
+### CJS
+
+<!-- prettier-ignore-start -->
 ```js
-var mime = require('mime-types')
+const mime = require("@whykhamist/mime-types").default;
+mime.getMime(...)
+
+OR
+
+// const MimeTypes = require("@whykhamist/mime-types").MimeTypes;
+// const MimeDb = require("@whykhamist/mime-types").MimeDb;
+const { MimeTypes, MimeDb } = require("@whykhamist/mime-types");
+const mime = new MimeTypes(MimeDb);
+mime.getMime(...)
+
+OR
+
+const { types, extensions, typeSets, getMime, getMimes, getContentType, getExtension, getCharset } = require("@whykhamist/mime-types");
 ```
+
+### ESM
+
+```js
+import mime from "@whykhamist/mime-types";
+mime.getMime(...)
+
+OR
+
+import { MimeTypes, MimeDb } from "@whykhamist/mime-types";
+const mime = new MimeTypes(MimeDb);
+mime.getMime(...)
+
+OR
+
+const { types, extensions, typeSets, getMime, getMimes, getContentType, getExtension, getCharset } from "@whykhamist/mime-types";
+```
+
+### Others
+```js
+import db from "mime-db/db.json";
+import { MimeTypes } from "@whykhamist/mime-types";
+import { MimeDatabase } from "mime-db";
+
+const mime = new MimeTypes(db as MimeDatabase);
+```
+<!-- prettier-ignore-end -->
+
+## Properties
+
+### types
+
+A map of content-types by extension.
+
+```js
+const type = types["mp3"];
+// "audio/mpeg"
+```
+
+### typeSets
+
+A map of array of content types by extension.
+
+```js
+const types = typeSets["mp3"];
+// [ 'audio/mp3', 'audio/mpeg' ]
+```
+
+### extensions
+
+A map of extensions by content-type.
+
+```js
+const exts = extensions["text/x-c"];
+// [ "c", "cc", "cxx", "cpp", "h", "hh", "dic" ]
+```
+
+## Methods
 
 All functions return `false` if input is invalid or not found.
 
-### mime.lookup(path)
+### getMime
 
 Lookup the content-type associated with a file.
 
 ```js
-mime.lookup('json') // 'application/json'
-mime.lookup('.md') // 'text/markdown'
-mime.lookup('file.html') // 'text/html'
-mime.lookup('folder/file.js') // 'application/javascript'
-mime.lookup('folder/.htaccess') // false
+getMime("json"); // 'application/json'
+getMime(".md"); // 'text/markdown'
+getMime("file.html"); // 'text/html'
+getMime("folder/file.js"); // 'application/javascript'
+getMime("folder/.htaccess"); // false
 
-mime.lookup('cats') // false
+getMime("cats"); // false
 ```
 
-### mime.contentType(type)
+### getMimes
+
+Find all content-types that are associated with a file.
+
+```js
+getMimes("mp3"); // [ "audio/mpeg", "audio/mp3" ]
+getMimes("path/to/file.rtf"); // [ "application/rtf", "text/rtf" ]
+getMimes("c:\\path\\to\\file.bmp"); // [ "image/x-ms-bmp", "image/bmp", ]
+```
+
+### getContentType
 
 Create a full content-type header given a content-type or extension.
 When given an extension, `mime.lookup` is used to get the matching
@@ -65,44 +161,36 @@ content-type does not already have a `charset` parameter, `mime.charset`
 is used to get the default charset and add to the returned content-type.
 
 ```js
-mime.contentType('markdown') // 'text/x-markdown; charset=utf-8'
-mime.contentType('file.json') // 'application/json; charset=utf-8'
-mime.contentType('text/html') // 'text/html; charset=utf-8'
-mime.contentType('text/html; charset=iso-8859-1') // 'text/html; charset=iso-8859-1'
+getContentType("markdown"); // 'text/x-markdown; charset=utf-8'
+getContentType("file.json"); // 'application/json; charset=utf-8'
+getContentType("text/html"); // 'text/html; charset=utf-8'
+getContentType("text/html; charset=iso-8859-1"); // 'text/html; charset=iso-8859-1'
 
 // from a full path
-mime.contentType(path.extname('/path/to/file.json')) // 'application/json; charset=utf-8'
+getContentType(path.extname("/path/to/file.json")); // 'application/json; charset=utf-8'
 ```
 
-### mime.extension(type)
+### getExtension
 
 Get the default extension for a content-type.
 
 ```js
-mime.extension('application/octet-stream') // 'bin'
+getExtension("application/octet-stream"); // 'bin'
 ```
 
-### mime.charset(type)
+### getCharset
 
 Lookup the implied default charset of a content-type.
 
 ```js
-mime.charset('text/markdown') // 'UTF-8'
+getCharset("text/markdown"); // 'UTF-8'
 ```
-
-### var type = mime.types[extension]
-
-A map of content-types by extension.
-
-### [extensions...] = mime.extensions[type]
-
-A map of extensions by content-type.
 
 ## License
 
 [MIT](LICENSE)
 
-[ci-image]: https://badgen.net/github/checks/jshttp/mime-types/master?label=ci
+<!-- [ci-image]: https://badgen.net/github/checks/jshttp/mime-types/master?label=ci
 [ci-url]: https://github.com/jshttp/mime-types/actions/workflows/ci.yml
 [coveralls-image]: https://badgen.net/coveralls/c/github/jshttp/mime-types/master
 [coveralls-url]: https://coveralls.io/r/jshttp/mime-types?branch=master
@@ -110,4 +198,4 @@ A map of extensions by content-type.
 [node-version-url]: https://nodejs.org/en/download
 [npm-downloads-image]: https://badgen.net/npm/dm/mime-types
 [npm-url]: https://npmjs.org/package/mime-types
-[npm-version-image]: https://badgen.net/npm/v/mime-types
+[npm-version-image]: https://badgen.net/npm/v/mime-types -->
