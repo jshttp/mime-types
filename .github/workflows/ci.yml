@@ -1,8 +1,15 @@
 name: ci
 
 on:
-- pull_request
-- push
+  push:
+    branches:
+      - master
+      - '3.x'
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
 
 jobs:
   test:
