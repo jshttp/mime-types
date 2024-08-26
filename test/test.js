@@ -231,7 +231,7 @@ describe('mimeTypes', function () {
   describe('extension conflicts', function () {
     console.warn('Mime-score logic changes extension->type mappings for the following:')
     for (var [extension, legacy, current] of mimeTypes._extensionConflicts) {
-      console.warn(`  ${extension} -> ${legacy} is now ${current}`)
+      console.warn(`* ${extension} -> ${legacy} is now ${current}`)
     }
   })
 })
