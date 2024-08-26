@@ -33,6 +33,10 @@ var TYPE_SCORES = {
  * total score.  The higher the score, the more "official" the type.
  */
 module.exports = function mimeScore (mimeType, source = 'default') {
+  if (mimeType === 'application/octet-stream') {
+    return 0
+  }
+
   const [type, subtype] = mimeType.split('/')
 
   const facet = subtype.replace(/(\.|x-).*/, '$1')
