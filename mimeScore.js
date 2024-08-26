@@ -6,7 +6,7 @@ var FACET_SCORES = {
   'x-': 200,
   'x.': 300,
   'vnd.': 400,
-  default: 900,
+  default: 900
 }
 
 // Score mime source (Logic originally from `jshttp/mime-types` module)
@@ -14,7 +14,7 @@ var SOURCE_SCORES = {
   nginx: 10,
   apache: 20,
   iana: 40,
-  default: 30, // definitions added by `jshttp/mime-db` project?
+  default: 30 // definitions added by `jshttp/mime-db` project?
 }
 
 var TYPE_SCORES = {
@@ -25,15 +25,15 @@ var TYPE_SCORES = {
   // prefer font/woff over application/font-woff
   font: 2,
 
-  default: 0,
+  default: 0
 }
 
 /**
  * Get each component of the score for a mime type.  The sum of these is the
  * total score.  The higher the score, the more "official" the type.
  */
-module.exports = function mimeScore(mimeType, source = 'default') {
-  let [type, subtype] = mimeType.split('/')
+module.exports = function mimeScore (mimeType, source = 'default') {
+  const [type, subtype] = mimeType.split('/')
 
   const facet = subtype.replace(/(\.|x-).*/, '$1')
 
