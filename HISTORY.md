@@ -1,17 +1,18 @@
-2.1.35 / 2022-03-12
+unreleased
 ===================
 
-  * deps: mime-db@1.52.0
-    - Add extensions from IANA for more `image/*` types
-    - Add extension `.asc` to `application/pgp-keys`
-    - Add extensions to various XML types
-    - Add new upstream MIME types
-
-2.1.34 / 2021-11-08
-===================
-
-  * deps: mime-db@1.51.0
-    - Add new upstream MIME types
+* resolve extension conflicts with mime-score (#119)
+  * asc -> application/pgp-signature is now application/pgp-keys
+  * mpp -> application/vnd.ms-project is now application/dash-patch+xml
+  * ac -> application/vnd.nokia.n-gage.ac+xml is now application/pkix-attr-cert
+  * bdoc -> application/x-bdoc is now application/bdoc
+  * wmz -> application/x-msmetafile is now application/x-ms-wmz
+  * xsl -> application/xslt+xml is now application/xml
+  * wav -> audio/wave is now audio/wav
+  * rtf -> text/rtf is now application/rtf
+  * xml -> text/xml is now application/xml
+  * mp4 -> video/mp4 is now application/mp4
+  * mpg4 -> video/mp4 is now application/mp4
 
 2.1.33 / 2021-10-01
 ===================
