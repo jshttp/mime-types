@@ -1,4 +1,3 @@
-
 var assert = require('assert')
 var mimeTypes = require('..')
 
@@ -220,8 +219,19 @@ describe('mimeTypes', function () {
       })
 
       it('should return mime type when there is extension, but no path', function () {
-        assert.strictEqual(mimeTypes.lookup('.config.json'), 'application/json')
+        assert.strictEqual(
+          mimeTypes.lookup('.config.json'),
+          'application/json'
+        )
       })
     })
+  })
+
+  // Note the changes in extension->type mapping that result from using mime-score
+  describe('extension conflicts', function () {
+    console.warn('Mime-score logic changes extension->type mappings for the following:')
+    for (var [extension, legacy, current] of mimeTypes._extensionConflicts) {
+      console.warn(`* ${extension} -> ${legacy} is now ${current}`)
+    }
   })
 })

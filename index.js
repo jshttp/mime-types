@@ -14,6 +14,7 @@
 
 var db = require('mime-db')
 var extname = require('path').extname
+var mimeScore = require('./mimeScore')
 
 /**
  * Module variables.
@@ -35,6 +36,7 @@ exports.extension = extension
 exports.extensions = Object.create(null)
 exports.lookup = lookup
 exports.types = Object.create(null)
+exports._extensionConflicts = []
 
 // Populate the extensions/types maps
 populateMaps(exports.extensions, exports.types)
@@ -80,9 +82,7 @@ function contentType (str) {
     return false
   }
 
-  var mime = str.indexOf('/') === -1
-    ? exports.lookup(str)
-    : str
+  var mime = str.indexOf('/') === -1 ? exports.lookup(str) : str
 
   if (!mime) {
     return false
@@ -152,9 +152,6 @@ function lookup (path) {
  */
 
 function populateMaps (extensions, types) {
-  // source preference (least -> most)
-  var preference = ['nginx', 'apache', undefined, 'iana']
-
   Object.keys(db).forEach(function forEachMimeType (type) {
     var mime = db[type]
     var exts = mime.extensions
@@ -169,20 +166,46 @@ function populateMaps (extensions, types) {
     // extension -> mime
     for (var i = 0; i < exts.length; i++) {
       var extension = exts[i]
+      types[extension] = _preferredType(extension, types[extension], type)
 
-      if (types[extension]) {
-        var from = preference.indexOf(db[types[extension]].source)
-        var to = preference.indexOf(mime.source)
-
-        if (types[extension] !== 'application/octet-stream' &&
-          (from > to || (from === to && types[extension].slice(0, 12) === 'application/'))) {
-          // skip the remapping
-          continue
-        }
+      // DELETE (eventually): Capture extension->type maps that change as a
+      // result of switching to mime-score.  This is just to help make reviewing
+      // PR #119 easier, and can be removed once that PR is approved.
+      const legacyType = _preferredTypeLegacy(
+        extension,
+        types[extension],
+        type
+      )
+      if (legacyType !== types[extension]) {
+        exports._extensionConflicts.push([extension, legacyType, types[extension]])
       }
-
-      // set the extension -> mime
-      types[extension] = type
     }
   })
+}
+
+// Resolve type conflict using mime-score
+function _preferredType (ext, type0, type1) {
+  var score0 = type0 ? mimeScore(type0, db[type0].source) : 0
+  var score1 = type1 ? mimeScore(type1, db[type1].source) : 0
+
+  return score0 > score1 ? type0 : type1
+}
+
+// Resolve type conflict using pre-mime-score logic
+function _preferredTypeLegacy (ext, type0, type1) {
+  var SOURCE_RANK = ['nginx', 'apache', undefined, 'iana']
+
+  var score0 = type0 ? SOURCE_RANK.indexOf(db[type0].source) : 0
+  var score1 = type1 ? SOURCE_RANK.indexOf(db[type1].source) : 0
+
+  if (
+    exports.types[extension] !== 'application/octet-stream' &&
+    (score0 > score1 ||
+      (score0 === score1 &&
+        exports.types[extension]?.slice(0, 12) === 'application/'))
+  ) {
+    return type0
+  }
+
+  return score0 > score1 ? type0 : type1
 }
