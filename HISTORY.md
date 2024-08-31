@@ -1,6 +1,8 @@
 unreleased
 ===================
 
+* Drop support for node <18
+* deps: mime-db@1.53.0
 * resolve extension conflicts with mime-score (#119)
   * asc -> application/pgp-signature is now application/pgp-keys
   * mpp -> application/vnd.ms-project is now application/dash-patch+xml
