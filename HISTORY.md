@@ -16,6 +16,22 @@ unreleased
   * mp4 -> video/mp4 is now application/mp4
   * mpg4 -> video/mp4 is now application/mp4
 
+
+2.1.35 / 2022-03-12
+===================
+
+  * deps: mime-db@1.52.0
+    - Add extensions from IANA for more `image/*` types
+    - Add extension `.asc` to `application/pgp-keys`
+    - Add extensions to various XML types
+    - Add new upstream MIME types
+
+2.1.34 / 2021-11-08
+===================
+
+  * deps: mime-db@1.51.0
+    - Add new upstream MIME types
+
 2.1.33 / 2021-10-01
 ===================
 
