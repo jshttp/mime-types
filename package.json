@@ -30,7 +30,8 @@
   "files": [
     "HISTORY.md",
     "LICENSE",
-    "index.js"
+    "index.js",
+    "mimeScore.js"
   ],
   "engines": {
     "node": ">= 0.6"
