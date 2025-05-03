@@ -25,6 +25,11 @@ var TYPE_SCORES = {
   // prefer font/woff over application/font-woff
   font: 2,
 
+  // prefer video/mp4 over audio/mp4 over application/mp4
+  // See https://www.rfc-editor.org/rfc/rfc4337.html#section-2
+  audio: 2,
+  video: 3,
+
   default: 0
 }
 

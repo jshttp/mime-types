@@ -158,6 +158,10 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.lookup('.xml'), 'application/xml')
     })
 
+    it('should return mime type for ".mp4"', function () {
+      assert.strictEqual(mimeTypes.lookup('.mp4'), 'video/mp4')
+    })
+
     it('should work without the leading dot', function () {
       assert.strictEqual(mimeTypes.lookup('html'), 'text/html')
       assert.strictEqual(mimeTypes.lookup('xml'), 'application/xml')
