@@ -34,7 +34,7 @@
     "mimeScore.js"
   ],
   "engines": {
-    "node": ">= 0.6"
+    "node": ">=18"
   },
   "scripts": {
     "lint": "eslint .",
