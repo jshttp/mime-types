@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - '3.x'
+      - v2
     paths-ignore:
       - '*.md'
   pull_request:
@@ -13,11 +14,11 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         name:
-        - Node.js 0.6
         - Node.js 0.8
         - Node.js 0.10
         - Node.js 0.12
@@ -40,13 +41,13 @@ jobs:
         - Node.js 17.x
         - Node.js 18.x
         - Node.js 19.x
+        - Node.js 20.x
+        - Node.js 21.x
+        - Node.js 22.x
+        - Node.js 23.x
+        - Node.js 24.x
 
         include:
-        - name: Node.js 0.6
-          node-version: "0.6"
-          npm-i: mocha@1.21.5
-          npm-rm: nyc
-
         - name: Node.js 0.8
           node-version: "0.8"
           npm-i: mocha@2.5.3
@@ -130,8 +131,23 @@ jobs:
         - name: Node.js 19.x
           node-version: "19.6"
 
+        - name: Node.js 20.x
+          node-version: "20.9"
+
+        - name: Node.js 21.x
+          node-version: "21"
+
+        - name: Node.js 22.x
+          node-version: "22"
+
+        - name: Node.js 23.x
+          node-version: "23"
+
+        - name: Node.js 24.x
+          node-version: "24"
+
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Install Node.js ${{ matrix.node-version }}
       shell: bash -eo pipefail -l {0}
