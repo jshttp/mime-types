@@ -13,6 +13,10 @@
     "types"
   ],
   "repository": "jshttp/mime-types",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/express"
+  },
   "dependencies": {
     "mime-db": "^1.54.0"
   },
