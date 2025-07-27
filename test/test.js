@@ -133,6 +133,37 @@ describe('mimeTypes', function () {
     })
   })
 
+  describe('.allExtensions(type)', function () {
+    it('should return a list of extensions for mime type', function () {
+      assert.deepEqual(mimeTypes.allExtensions('text/html'), ['html', 'htm', 'shtml'])
+      assert.deepEqual(mimeTypes.allExtensions(' text/html'), ['html', 'htm', 'shtml'])
+      assert.deepEqual(mimeTypes.allExtensions('text/html '), ['html', 'htm', 'shtml'])
+    })
+
+    it('should return false for unknown type', function () {
+      assert.strictEqual(mimeTypes.allExtensions('application/x-bogus'), false)
+    })
+
+    it('should return false for non-type string', function () {
+      assert.strictEqual(mimeTypes.allExtensions('bogus'), false)
+    })
+
+    it('should return false for non-strings', function () {
+      assert.strictEqual(mimeTypes.allExtensions(null), false)
+      assert.strictEqual(mimeTypes.allExtensions(undefined), false)
+      assert.strictEqual(mimeTypes.allExtensions(42), false)
+      assert.strictEqual(mimeTypes.allExtensions({}), false)
+    })
+
+    it('should return extension for mime type with parameters', function () {
+      assert.deepEqual(mimeTypes.allExtensions('text/html;charset=UTF-8'), ['html', 'htm', 'shtml'])
+      assert.deepEqual(mimeTypes.allExtensions('text/HTML; charset=UTF-8'), ['html', 'htm', 'shtml'])
+      assert.deepEqual(mimeTypes.allExtensions('text/html; charset=UTF-8'), ['html', 'htm', 'shtml'])
+      assert.deepEqual(mimeTypes.allExtensions('text/html; charset=UTF-8 '), ['html', 'htm', 'shtml'])
+      assert.deepEqual(mimeTypes.allExtensions('text/html ; charset=UTF-8'), ['html', 'htm', 'shtml'])
+    })
+  })
+
   describe('.lookup(extension)', function () {
     it('should return mime type for ".html"', function () {
       assert.strictEqual(mimeTypes.lookup('.html'), 'text/html')
