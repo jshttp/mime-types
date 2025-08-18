@@ -140,7 +140,7 @@ describe('mimeTypes', function () {
     })
 
     it('should return mime type for ".js"', function () {
-      assert.strictEqual(mimeTypes.lookup('.js'), 'application/javascript')
+      assert.strictEqual(mimeTypes.lookup('.js'), 'text/javascript')
     })
 
     it('should return mime type for ".json"', function () {

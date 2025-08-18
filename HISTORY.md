@@ -1,3 +1,9 @@
+unreleased
+==========
+
+  * deps: mime-db@1.54.0
+    - Add new upstream MIME types
+
 2.1.35 / 2022-03-12
 ===================
 
