@@ -45,7 +45,7 @@ populateMaps(exports.extensions, exports.types)
  * Get the default charset for a MIME type.
  *
  * @param {string} type
- * @return {boolean|string}
+ * @return {false|string}
  */
 
 function charset (type) {
@@ -73,7 +73,7 @@ function charset (type) {
  * Create a full Content-Type header given a MIME type or extension.
  *
  * @param {string} str
- * @return {boolean|string}
+ * @return {false|string}
  */
 
 function contentType (str) {
@@ -101,7 +101,7 @@ function contentType (str) {
  * Get the default extension for a MIME type.
  *
  * @param {string} type
- * @return {boolean|string}
+ * @return {false|string}
  */
 
 function extension (type) {
@@ -126,7 +126,7 @@ function extension (type) {
  * Lookup the MIME type for a file path/extension.
  *
  * @param {string} path
- * @return {boolean|string}
+ * @return {false|string}
  */
 
 function lookup (path) {
