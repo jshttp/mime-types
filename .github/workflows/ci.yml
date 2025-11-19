@@ -113,7 +113,7 @@ jobs:
           ENGINES=$(jq -r .engines.node package.json)
           MIN_NODE=$(echo "$ENGINES" | grep -oE '[0-9]+(\.[0-9]+)?(\.[0-9]+)?' | head -n 1)
           echo "NODE_VERSION=$MIN_NODE" >> $GITHUB_ENV
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
 
