@@ -1,3 +1,10 @@
+3.0.2 / 2025-11-20
+===================
+
+* Fix: update JSDoc to reflect that functions return only `false` or `string`, not `boolean|string`. 
+* Fix: refined mime-score logic so `.mp4` resolves correctly
+* Fix:reflect the current Node.js version supported to ≥ 18 (See 3.0.0 for more details).
+
 3.0.1 / 2025-03-26
 ===================
 
