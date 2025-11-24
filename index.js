@@ -199,10 +199,10 @@ function _preferredTypeLegacy (ext, type0, type1) {
   var score1 = type1 ? SOURCE_RANK.indexOf(db[type1].source) : 0
 
   if (
-    exports.types[extension] !== 'application/octet-stream' &&
+    exports.types[ext] !== 'application/octet-stream' &&
     (score0 > score1 ||
       (score0 === score1 &&
-        exports.types[extension]?.slice(0, 12) === 'application/'))
+        exports.types[ext]?.slice(0, 12) === 'application/'))
   ) {
     return type0
   }
