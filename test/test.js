@@ -71,6 +71,7 @@ describe('mimeTypes', function () {
     it('should return false for invalid arguments', function () {
       assert.strictEqual(mimeTypes.contentType({}), false)
       assert.strictEqual(mimeTypes.contentType(null), false)
+      assert.strictEqual(mimeTypes.contentType(undefined), false)
       assert.strictEqual(mimeTypes.contentType(true), false)
       assert.strictEqual(mimeTypes.contentType(42), false)
     })
