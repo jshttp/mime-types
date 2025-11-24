@@ -42,6 +42,7 @@ describe('mimeTypes', function () {
     it('should return false for invalid arguments', function () {
       assert.strictEqual(mimeTypes.charset({}), false)
       assert.strictEqual(mimeTypes.charset(null), false)
+      assert.strictEqual(mimeTypes.charset(undefined), false)
       assert.strictEqual(mimeTypes.charset(true), false)
       assert.strictEqual(mimeTypes.charset(42), false)
     })
