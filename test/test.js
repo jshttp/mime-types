@@ -122,6 +122,7 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.extension(undefined), false)
       assert.strictEqual(mimeTypes.extension(42), false)
       assert.strictEqual(mimeTypes.extension({}), false)
+      assert.strictEqual(mimeTypes.extension(''), false)
     })
 
     it('should return extension for mime type with parameters', function () {
