@@ -42,8 +42,10 @@ describe('mimeTypes', function () {
     it('should return false for invalid arguments', function () {
       assert.strictEqual(mimeTypes.charset({}), false)
       assert.strictEqual(mimeTypes.charset(null), false)
+      assert.strictEqual(mimeTypes.charset(undefined), false)
       assert.strictEqual(mimeTypes.charset(true), false)
       assert.strictEqual(mimeTypes.charset(42), false)
+      assert.strictEqual(mimeTypes.charset(''), false)
     })
   })
 
@@ -71,8 +73,10 @@ describe('mimeTypes', function () {
     it('should return false for invalid arguments', function () {
       assert.strictEqual(mimeTypes.contentType({}), false)
       assert.strictEqual(mimeTypes.contentType(null), false)
+      assert.strictEqual(mimeTypes.contentType(undefined), false)
       assert.strictEqual(mimeTypes.contentType(true), false)
       assert.strictEqual(mimeTypes.contentType(42), false)
+      assert.strictEqual(mimeTypes.contentType(''), false)
     })
   })
 
@@ -122,6 +126,7 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.extension(undefined), false)
       assert.strictEqual(mimeTypes.extension(42), false)
       assert.strictEqual(mimeTypes.extension({}), false)
+      assert.strictEqual(mimeTypes.extension(''), false)
     })
 
     it('should return extension for mime type with parameters', function () {
@@ -182,6 +187,7 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.lookup(undefined), false)
       assert.strictEqual(mimeTypes.lookup(42), false)
       assert.strictEqual(mimeTypes.lookup({}), false)
+      assert.strictEqual(mimeTypes.lookup(''), false)
     })
   })
 
