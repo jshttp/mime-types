@@ -1,5 +1,6 @@
 var assert = require('assert')
 var mimeTypes = require('..')
+const extname = require('../extname')
 
 describe('mimeTypes', function () {
   describe('.charset(type)', function () {
@@ -243,5 +244,105 @@ describe('mimeTypes', function () {
     for (var [extension, legacy, current] of mimeTypes._extensionConflicts) {
       console.warn(`* ${extension} -> ${legacy} is now ${current}`)
     }
+  })
+})
+
+describe('extname', function () {
+  it('should return the correct extension for a file with a valid extension', function () {
+    const result = extname('file.txt')
+    assert.strictEqual(result, '.txt')
+  })
+
+  it('should return an empty string if no extension exists', function () {
+    const result = extname('file')
+    assert.strictEqual(result, '')
+  })
+
+  it('should return an empty string for files that start with a dot but have no extension', function () {
+    const result = extname('.hiddenfile')
+    assert.strictEqual(result, '')
+  })
+
+  it('should return the correct extension for files with multiple dots in the name', function () {
+    const result = extname('archive.tar.gz')
+    assert.strictEqual(result, '.gz')
+  })
+
+  it('should return the correct extension for a file with mixed case extension', function () {
+    const result = extname('file.TXT')
+    assert.strictEqual(result, '.TXT')
+  })
+
+  it('should return an empty string if the dot is at the start of the filename', function () {
+    const result = extname('.file')
+    assert.strictEqual(result, '')
+  })
+
+  // POSIX:
+
+  it('should return the correct extension for a file in a nested directory', function () {
+    const result = extname('folder/subfolder/file.txt')
+    assert.strictEqual(result, '.txt')
+  })
+
+  it('should handle paths with multiple slashes correctly', function () {
+    const result = extname('/home/user/file.name.ext')
+    assert.strictEqual(result, '.ext')
+  })
+
+  // Windows:
+
+  it('should return the correct extension for a Windows path with backslashes', function () {
+    const result = extname('C:\\Users\\file.txt')
+    assert.strictEqual(result, '.txt')
+  })
+
+  it('should return the correct extension for a Windows path with multiple backslashes', function () {
+    const result = extname('C:\\Users\\Documents\\Projects\\file.tar.gz')
+    assert.strictEqual(result, '.gz')
+  })
+
+  it('should return an empty string for a Windows path with no extension', function () {
+    const result = extname('C:\\Users\\file')
+    assert.strictEqual(result, '')
+  })
+
+  it('should return an empty string for a hidden Windows file (starts with a dot)', function () {
+    const result = extname('C:\\Users\\.hiddenfile')
+    assert.strictEqual(result, '')
+  })
+
+  it('should return the correct extension for a Windows path with multiple dots', function () {
+    const result = extname('C:\\Users\\file.name.with.dots.ext')
+    assert.strictEqual(result, '.ext')
+  })
+
+  it('should return the correct extension for a Windows path with mixed case extension', function () {
+    const result = extname('C:\\Users\\file.TXT')
+    assert.strictEqual(result, '.TXT')
+  })
+
+  // Test for TypeError when input is not a string
+  it('should throw a TypeError if the input is not a string', function () {
+    assert.throws(() => extname(123), {
+      name: 'TypeError',
+      message: 'path is not a string'
+    })
+    assert.throws(() => extname(null), {
+      name: 'TypeError',
+      message: 'path is not a string'
+    })
+    assert.throws(() => extname(undefined), {
+      name: 'TypeError',
+      message: 'path is not a string'
+    })
+    assert.throws(() => extname({}), {
+      name: 'TypeError',
+      message: 'path is not a string'
+    })
+    assert.throws(() => extname([]), {
+      name: 'TypeError',
+      message: 'path is not a string'
+    })
   })
 })
