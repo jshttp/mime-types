@@ -184,6 +184,7 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.lookup(undefined), false)
       assert.strictEqual(mimeTypes.lookup(42), false)
       assert.strictEqual(mimeTypes.lookup({}), false)
+      assert.strictEqual(mimeTypes.lookup(''), false)
     })
   })
 
