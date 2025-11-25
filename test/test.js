@@ -45,6 +45,7 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.charset(undefined), false)
       assert.strictEqual(mimeTypes.charset(true), false)
       assert.strictEqual(mimeTypes.charset(42), false)
+      assert.strictEqual(mimeTypes.charset(''), false)
     })
   })
 
