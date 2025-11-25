@@ -73,6 +73,7 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.contentType(null), false)
       assert.strictEqual(mimeTypes.contentType(true), false)
       assert.strictEqual(mimeTypes.contentType(42), false)
+      assert.strictEqual(mimeTypes.contentType(''), false)
     })
   })
 
