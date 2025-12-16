@@ -15,119 +15,77 @@ permissions:
   contents: read
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Install Node.js
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: 'lts/*'
+
+      - name: Install Node.js dependencies
+        run: npm install --ignore-scripts --include=dev
+
+      - name: Lint code
+        run: npm run lint
+
   test:
-    permissions:
-      checks: write  # for coverallsapp/github-action to create new checks
-      contents: read  # for actions/checkout to fetch code
+    name: Test - Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        name:
-        - Node.js 18.x
-        - Node.js 19.x
-        - Node.js 20.x
-        - Node.js 21.x
-        - Node.js 22.x
-
-        include:
-        - name: Node.js 18.x
-          node-version: "18"
-
-        - name: Node.js 19.x
-          node-version: "19"
-
-        - name: Node.js 20.x
-          node-version: "20"
-
-        - name: Node.js 21.x
-          node-version: "21"
-
-        - name: Node.js 22.x
-          node-version: "22"
+        node-version: [18.0.0, 18, 19, 20, 21, 22, 23, 24, 25]
 
     steps:
-    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-    - name: Install Node.js ${{ matrix.node-version }}
-      shell: bash -eo pipefail -l {0}
-      run: |
-        nvm install --default ${{ matrix.node-version }}
-        dirname "$(nvm which ${{ matrix.node-version }})" >> "$GITHUB_PATH"
-
-    - name: Configure npm
-      run: |
-        if [[ "$(npm config get package-lock)" == "true" ]]; then
-          npm config set package-lock false
-        else
-          npm config set shrinkwrap false
-        fi
-
-    - name: Remove npm module(s) ${{ matrix.npm-rm }}
-      run: npm rm --silent --save-dev ${{ matrix.npm-rm }}
-      if: matrix.npm-rm != ''
-
-    - name: Install npm module(s) ${{ matrix.npm-i }}
-      run: npm install --save-dev ${{ matrix.npm-i }}
-      if: matrix.npm-i != ''
-
-    - name: Install Node.js dependencies
-      run: npm install
-
-    - name: List environment
-      id: list_env
-      shell: bash
-      run: |
-        echo "node@$(node -v)"
-        echo "npm@$(npm -v)"
-        npm -s ls ||:
-        (npm -s ls --depth=0 ||:) | awk -F'[ @]' 'NR>1 && $2 { print "::set-output name=" $2 "::" $3 }'
-
-    - name: Run tests
-      shell: bash
-      run: |
-        if npm -ps ls nyc | grep -q nyc; then
-          npm run test-ci
-        else
-          npm test
-        fi
-
-    - name: Lint code
-      if: steps.list_env.outputs.eslint != ''
-      run: npm run lint
-
-    - name: Collect code coverage
-      uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # master
-      if: steps.list_env.outputs.nyc != ''
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.test_number }}
-        parallel: true
-  test-minimum-node:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: get minimum node version
-        id: node
-        run: |
-          ENGINES=$(jq -r .engines.node package.json)
-          MIN_NODE=$(echo "$ENGINES" | grep -oE '[0-9]+(\.[0-9]+)?(\.[0-9]+)?' | head -n 1)
-          echo "NODE_VERSION=$MIN_NODE" >> $GITHUB_ENV
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          # Node.js release schedule: https://nodejs.org/en/about/releases/
+          node-version: ${{ matrix.node-version }}
+          check-latest: true
 
-      - run: npm install
-      - run: npm test
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test-ci
+
+      - name: Upload code coverage
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: coverage-node-${{ matrix.node-version }}
+          path: ./coverage/lcov.info
+          retention-days: 1
 
   coverage:
-    permissions:
-      checks: write  # for coverallsapp/github-action to create new checks
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
-    - name: Upload code coverage
-      uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # master
-      with:
-        github-token: ${{ secrets.github_token }}
-        parallel-finished: true
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Install lcov
+        shell: bash
+        run: sudo apt-get -y install lcov
+
+      - name: Collect coverage reports
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          path: ./coverage
+          pattern: coverage-node-*
+
+      - name: Merge coverage reports
+        shell: bash
+        run: find ./coverage -name lcov.info -exec printf '-a %q\n' {} \; | xargs lcov -o ./lcov.info
+
+      - name: Upload coverage report
+        uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
+        with:
+          file: ./lcov.info
