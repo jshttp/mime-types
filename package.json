@@ -32,8 +32,6 @@
     "nyc": "15.1.0"
   },
   "files": [
-    "HISTORY.md",
-    "LICENSE",
     "index.js",
     "mimeScore.js"
   ],
