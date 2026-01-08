@@ -63,7 +63,7 @@ Lookup the content-type associated with a file.
 mime.lookup('json') // 'application/json'
 mime.lookup('.md') // 'text/markdown'
 mime.lookup('file.html') // 'text/html'
-mime.lookup('folder/file.js') // 'application/javascript'
+mime.lookup('folder/file.js') // 'text/javascript'
 mime.lookup('folder/.htaccess') // false
 
 mime.lookup('cats') // false
