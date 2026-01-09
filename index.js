@@ -33,6 +33,7 @@ exports.charset = charset
 exports.charsets = { lookup: charset }
 exports.contentType = contentType
 exports.extension = extension
+exports.allExtensions = allExtensions
 exports.extensions = Object.create(null)
 exports.lookup = lookup
 exports.types = Object.create(null)
@@ -105,6 +106,19 @@ function contentType (str) {
  */
 
 function extension (type) {
+  var extensions = allExtensions(type)
+
+  return extensions ? extensions[0] : extensions
+}
+
+/**
+ * Get all the extensions for a MIME type.
+ *
+ * @param {string} type
+ * @return {boolean|Array}
+ */
+
+function allExtensions (type) {
   if (!type || typeof type !== 'string') {
     return false
   }
@@ -119,7 +133,7 @@ function extension (type) {
     return false
   }
 
-  return exts[0]
+  return exts
 }
 
 /**
