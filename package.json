@@ -8,6 +8,7 @@
     "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
   ],
   "license": "MIT",
+  "sideEffects": false,
   "keywords": [
     "mime",
     "types"
