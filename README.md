@@ -71,11 +71,12 @@ mime.lookup('cats') // false
 
 ### mime.contentType(type)
 
-Create a full content-type header given a content-type or extension.
+Create a full HTTP `Content-Type` header value given a content-type or extension.
 When given an extension, `mime.lookup` is used to get the matching
 content-type, otherwise the given content-type is used. Then if the
 content-type does not already have a `charset` parameter, `mime.charset`
 is used to get the default charset and add to the returned content-type.
+Use `mime.lookup` when you need only the bare MIME type without parameters.
 
 ```js
 mime.contentType('markdown') // 'text/x-markdown; charset=utf-8'
