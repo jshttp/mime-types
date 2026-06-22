@@ -101,6 +101,14 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.contentType('text/html; charset=iso-8859-1'), 'text/html; charset=iso-8859-1')
     })
 
+    it('should attach charset when a parameter value contains "charset"', function () {
+      assert.strictEqual(mimeTypes.contentType('text/plain; name=mycharset'), 'text/plain; name=mycharset; charset=utf-8')
+    })
+
+    it('should attach charset when the subtype contains "charset"', function () {
+      assert.strictEqual(mimeTypes.contentType('text/x-charset'), 'text/x-charset; charset=utf-8')
+    })
+
     it('should return type for unknown types', function () {
       assert.strictEqual(mimeTypes.contentType('application/x-bogus'), 'application/x-bogus')
     })

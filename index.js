@@ -23,6 +23,7 @@ var mimeScore = require('./mimeScore')
 
 var EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/
 var TEXT_TYPE_REGEXP = /^text\//i
+var CHARSET_PARAM_REGEXP = /;\s*charset\s*=/i
 
 /**
  * Module exports.
@@ -89,7 +90,7 @@ function contentType (str) {
   }
 
   // TODO: use content-type or other module
-  if (mime.indexOf('charset') === -1) {
+  if (!CHARSET_PARAM_REGEXP.test(mime)) {
     var charset = exports.charset(mime)
     if (charset) mime += '; charset=' + charset.toLowerCase()
   }
