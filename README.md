@@ -79,13 +79,17 @@ is used to get the default charset and add to the returned content-type.
 
 ```js
 mime.contentType('markdown') // 'text/x-markdown; charset=utf-8'
-mime.contentType('file.json') // 'application/json; charset=utf-8'
 mime.contentType('text/html') // 'text/html; charset=utf-8'
 mime.contentType('text/html; charset=iso-8859-1') // 'text/html; charset=iso-8859-1'
+mime.contentType('file.json') // 'application/json; charset=utf-8' (charset from mime-db)
 
 // from a full path
-mime.contentType(path.extname('/path/to/file.json')) // 'application/json; charset=utf-8'
+mime.contentType(path.extname('/path/to/file.html')) // 'text/html; charset=utf-8'
 ```
+
+Default charsets come from [`mime-db`](https://github.com/jshttp/mime-db). Note that some types
+(including `application/json`) are defined by their RFCs without a `charset` parameter, but
+mime-db may still supply a default that this library appends for convenience.
 
 ### mime.extension(type)
 
