@@ -113,10 +113,22 @@ function extension (type) {
   var match = EXTRACT_TYPE_REGEXP.exec(type)
 
   // get extensions
-  var exts = match && exports.extensions[match[1].toLowerCase()]
+  var mime = match && match[1].toLowerCase()
+  var exts = mime && exports.extensions[mime]
 
   if (!exts || !exts.length) {
     return false
+  }
+
+  // Prefer an extension that matches the subtype name when present
+  // (e.g. audio/aac -> "aac" over "adts"; see #142 / IANA ADTS guidance).
+  var slash = mime.indexOf('/')
+  if (slash !== -1) {
+    var subtype = mime.slice(slash + 1)
+    var preferred = exts.indexOf(subtype)
+    if (preferred !== -1) {
+      return exts[preferred]
+    }
   }
 
   return exts[0]
