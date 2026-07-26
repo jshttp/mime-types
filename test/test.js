@@ -136,6 +136,12 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.extension('text/html; charset=UTF-8 '), 'html')
       assert.strictEqual(mimeTypes.extension('text/html ; charset=UTF-8'), 'html')
     })
+
+    it('should prefer subtype-named extension when listed', function () {
+      // mime-db lists audio/aac as ["adts","aac"]; IANA ADTS guidance uses .aac
+      assert.strictEqual(mimeTypes.extension('audio/aac'), 'aac')
+      assert.ok(mimeTypes.extensions['audio/aac'].indexOf('adts') !== -1)
+    })
   })
 
   describe('.lookup(extension)', function () {
