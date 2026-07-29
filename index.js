@@ -38,6 +38,27 @@ exports.lookup = lookup
 exports.types = Object.create(null)
 exports._extensionConflicts = []
 
+// Fix extension priority for mime-db data
+// prefer aac over adts for audio/aac (https://github.com/jshttp/mime-types/issues/142)
+var aacExts = db['audio/aac'] && db['audio/aac'].extensions
+if (aacExts) {
+  var aacIdx = aacExts.indexOf('aac')
+  if (aacIdx > 0) {
+    aacExts.splice(aacIdx, 1)
+    aacExts.unshift('aac')
+  }
+}
+
+// prefer mov over qt for video/quicktime (https://github.com/jshttp/mime-types/issues/139)
+var movExts = db['video/quicktime'] && db['video/quicktime'].extensions
+if (movExts) {
+  var movIdx = movExts.indexOf('mov')
+  if (movIdx > 0) {
+    movExts.splice(movIdx, 1)
+    movExts.unshift('mov')
+  }
+}
+
 // Populate the extensions/types maps
 populateMaps(exports.extensions, exports.types)
 
