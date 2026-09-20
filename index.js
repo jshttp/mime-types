@@ -160,6 +160,14 @@ function populateMaps (extensions, types) {
       return
     }
 
+    // Prefer commonly used extensions when mime-db order is suboptimal.
+    // video/quicktime: mov is far more common than qt (Fixes #139).
+    if (type === 'video/quicktime' && exts.indexOf('mov') !== -1) {
+      exts = exts.slice()
+      exts.splice(exts.indexOf('mov'), 1)
+      exts.unshift('mov')
+    }
+
     // mime -> extensions
     extensions[type] = exts
 

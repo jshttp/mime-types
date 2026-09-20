@@ -136,6 +136,10 @@ describe('mimeTypes', function () {
       assert.strictEqual(mimeTypes.extension('text/html; charset=UTF-8 '), 'html')
       assert.strictEqual(mimeTypes.extension('text/html ; charset=UTF-8'), 'html')
     })
+
+    it('should prefer mov over qt for video/quicktime', function () {
+      assert.strictEqual(mimeTypes.extension('video/quicktime'), 'mov')
+    })
   })
 
   describe('.lookup(extension)', function () {
